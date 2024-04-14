@@ -14,3 +14,28 @@ by considering many programming languages and technologies because there are to 
 In this course I will be selecting programming lanaguages as C# for ASP.NET, TypeScript for React JS. Distributed architecture based on Microservice pattern.
 We will use Docker, Microsoft Azure of deployment and securing our application. Below is the list of complete technologies that we will use.
 
+- Figma for UX creation
+- Web Api for REST end point and business logic, gRPC,GraphQL
+- SQL Server, MongoDB, Redis as distibuted cache
+- Elastic Search, Logstash, Kibana
+- Docker for containerization
+- Entity Framework, Automapper
+- Azure Kubernates Service
+- NGINX
+- Ocelot API GW
+- Polly for resilience
+- CDN
+- RabbitMQ as message broker
+- Azure Serivices like VNET, Load Balancer, Azure Application Gateway, WAF
+- 
+
+
+<Problem selection>
+<Problem Description>
+<Architecture Vision>
+<High level non-funtional requirements>
+<Proposed Solution Options>
+<Costing Estimates>
+
+
+
