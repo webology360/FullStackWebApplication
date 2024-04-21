@@ -31,7 +31,12 @@ We will use Docker, Microsoft Azure of deployment and securing our application. 
 - Azure AD for Enterprise application
 - JMeter for load testing
 - Nunit, MoQ for unit testing
-  
+
+We will go through the following steps while creating our solution from UX to working application on scale.
+<Rough> 
+UI use https://color.adobe.com/search for color palatte creation.
+
+<rough>
 
 
 <Problem selection>
