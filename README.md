@@ -85,6 +85,28 @@ The objective is to procure a comprehensive, user-friendly, and secure web appli
 These requirements aim to create a matrimonial web application that is not only aligned with modern standards but also resonates with the cultural context of the Indian market. The solution should be scalable, reliable, and adaptable to the evolving needs of users.
 
 </p>
+
+Now the team or mostly project manager, technical architect and UI-UX expert will analyze the problem statement and understand the requirement.
+Once they are 80% okay with the requirement a meeting with the team is called and the problem statement and requirement is presented to the team.
+The team brainstroms each requirement so that every one in them from manager to developer to QA team are on the same page.
+And as the team agrees upon doing the project, team chooses to follow agile methodology for the implementation and management of the project.
+The project manager kick off the project by starting sprint Zero which involves below steps.
+
+1. Defining the project scope: Establishing what the project will cover and the goals to be achieved.
+2. Setting up the development environment: Preparing the necessary tools and infrastructure for the development work.
+3. Creating the initial product backlog: Listing all the features, requirements, and tasks that need to be done during the project.
+4. Developing an initial release plan: Outlining a high-level schedule for the release of the product features.
+5. Identifying risks and mitigation strategies: Analyzing potential project risks and how to address them.
+6. Establishing Agile practices and tools: Deciding on the Agile frameworks and tools to be used throughout the project.
+7. Forming the Agile team: Assembling the team members who will work on the project.
+
+One of the major work happens in sprint zero is to desigh the UX and get early feedback from the customer and other stakeholders, so that requirements can fit in correctly and later rework can be minimised.
+
+So I have designed UX as per the requirement in figma online UX creation tool, you can find the designed UX in the below link.
+<a>https://www.figma.com/proto/kP81TYpt8o37Im0a8oLBxP/Matimonial-Admin-Portal?node-id=1-2&starting-point-node-id=1%3A2&t=YhNP10G1ZCfkLPs2-1</a> .
+
+
+
 <Rough> 
 UI use https://color.adobe.com/search for color palatte creation.
 
