@@ -42,6 +42,49 @@ We will use Docker, Microsoft Azure of deployment and securing our application. 
 - Nunit, MoQ for unit testing
 
 We will go through the following steps while creating our solution from UX to working application on scale.
+
+So, before we start let's assume we as a IT solution provider company gets below requirement that you and your team has to implement.
+<h1>
+  **Problem Statement:**
+The objective is to procure a comprehensive, user-friendly, and secure web application that caters to the diverse and dynamic matrimonial market of India. The platform should facilitate seamless user interactions, robust matchmaking capabilities, and ensure privacy and safety for its users.
+
+**Requirements:**
+
+- **User Profiles & Authentication:**
+  - Detailed user profiles with multiple fields for personal, educational, and professional information.
+  - Secure authentication mechanisms including multi-factor authentication.
+
+- **Matchmaking & Search Functionality:**
+  - Advanced search filters based on various criteria such as location, community, education, etc.
+  - An intelligent matchmaking algorithm that suggests potential matches.
+
+- **User Interaction & Engagement:**
+  - Chat and messaging features to enable private communication between users.
+  - Notification system for alerts on new matches, messages, and profile views.
+
+- **Privacy & Security:**
+  - Strict privacy controls allowing users to manage the visibility of their profiles and photos.
+  - Robust data protection measures to safeguard user information.
+
+- **Mobile Compatibility:**
+  - A responsive design that ensures full functionality on both desktop and mobile devices.
+  - An option for a mobile application to enhance user accessibility and engagement.
+
+- **Cultural Sensitivity & Customization:**
+  - Features that respect and incorporate cultural nuances and preferences.
+  - Customizable user experience to cater to the diverse user base.
+
+- **Analytics & Reporting:**
+  - Dashboard for analytics to track user engagement and success stories.
+  - Reporting tools for users to report issues or suspicious activities.
+
+- **Support & Maintenance:**
+  - Regular updates and maintenance for smooth operation.
+  - Customer support system for user assistance and feedback.
+
+These requirements aim to create a matrimonial web application that is not only aligned with modern standards but also resonates with the cultural context of the Indian market. The solution should be scalable, reliable, and adaptable to the evolving needs of users.
+
+</h1>
 <Rough> 
 UI use https://color.adobe.com/search for color palatte creation.
 
