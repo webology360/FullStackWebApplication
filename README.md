@@ -104,6 +104,7 @@ One of the major work happens in sprint zero is to desigh the UX and get early f
 
 So I have designed UX as per the requirement in figma online UX creation tool, you can find the designed UX in the below link.
 <a>https://www.figma.com/proto/kP81TYpt8o37Im0a8oLBxP/Matimonial-Admin-Portal?node-id=1-2&starting-point-node-id=1%3A2&t=YhNP10G1ZCfkLPs2-1</a> .
+![Alt text](UX/Home.png)
 
 
 
