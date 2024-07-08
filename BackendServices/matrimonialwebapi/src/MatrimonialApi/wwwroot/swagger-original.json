@@ -1,0 +1,1546 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "Matrimonial API - OpenAPI 3.0",
+    "description" : "Design and definition of Matrimonial APIs created for practice and teaching",
+    "contact" : {
+      "email" : "floatingrays@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.11"
+  },
+  "externalDocs" : {
+    "description" : "Find out more about Swagger",
+    "url" : "http://swagger.io"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:3002/api"
+  } ],
+  "tags" : [ {
+    "name" : "Admin",
+    "description" : "Persona which manages matrimonial profile and other admin",
+    "externalDocs" : {
+      "description" : "Find out more about matrimonial API",
+      "url" : "http://swagger.io"
+    }
+  }, {
+    "name" : "Role",
+    "description" : "As of today We are not using creating api for adding a role as this will be directly created in DB and mapped to permissions."
+  }, {
+    "name" : "Permission",
+    "description" : "As of today We are not using creating api for adding a permission as this will be directly created in DB."
+  }, {
+    "name" : "Person",
+    "description" : "Add and manage profile"
+  }, {
+    "name" : "Favourite",
+    "description" : "Add or remove a favourite"
+  }, {
+    "name" : "Communication",
+    "description" : "Make communication and get communication"
+  } ],
+  "paths" : {
+    "/admin" : {
+      "summary" : "Add a admin to the system",
+      "description" : "Add a admin to the system",
+      "get" : {
+        "tags" : [ "Admin" ],
+        "summary" : "Get all admins",
+        "description" : "Get all the admins present in the system",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/CreatedAdmin"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "deprecated" : false,
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Admin" ],
+        "summary" : "Add a admin to the system",
+        "description" : "Add a admin to the system",
+        "operationId" : "AddAdmin",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Create a new admin",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Admin"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreatedAdmin"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "deprecated" : false,
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/admin/{adminId}" : {
+      "summary" : "Manage a admin from the system",
+      "description" : "Manage a admin from the system",
+      "get" : {
+        "tags" : [ "Admin" ],
+        "summary" : "Get a admin from the system",
+        "description" : "Get a admin to the system",
+        "operationId" : "GetAdmin",
+        "parameters" : [ {
+          "name" : "adminId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreatedAdmin"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "deprecated" : false,
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      },
+      "put" : {
+        "tags" : [ "Admin" ],
+        "summary" : "Update a admin",
+        "description" : "Update a admin",
+        "operationId" : "UpdateAdmin",
+        "parameters" : [ {
+          "name" : "adminId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Update a admin",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Admin"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "tags" : [ "Admin" ],
+        "summary" : "Delete a admin",
+        "description" : "Delete a admin",
+        "operationId" : "DeleteAdmin",
+        "parameters" : [ {
+          "name" : "adminId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/role" : {
+      "summary" : "Manage roles",
+      "description" : "Manage roles",
+      "get" : {
+        "tags" : [ "Role" ],
+        "summary" : "Get all roles",
+        "description" : "Get all the roles",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Role"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "deprecated" : false,
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/role/{roleId}" : {
+      "summary" : "Get a role",
+      "description" : "Get a role",
+      "get" : {
+        "tags" : [ "Role" ],
+        "summary" : "Get a existing role",
+        "description" : "Get a existing role",
+        "parameters" : [ {
+          "name" : "roleId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Role"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/person" : {
+      "summary" : "Manage bride and groom profile",
+      "description" : "Manage bride and groom profile",
+      "get" : {
+        "tags" : [ "Person" ],
+        "summary" : "Get n profiles",
+        "description" : "Get n profiles page wise",
+        "operationId" : "GetProfiles",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Autorization",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "pageNumber",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "range",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ShortProfile"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Person" ],
+        "summary" : "Add a profile to the system",
+        "description" : "Add a profile to the system",
+        "operationId" : "AddProfile",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Create a new Profile",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Person"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CreatedAdmin"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "deprecated" : false,
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/person/{personId}" : {
+      "summary" : "Manage a particular profile",
+      "description" : "Manage a particular profile",
+      "get" : {
+        "tags" : [ "Person" ],
+        "summary" : "Get a particular profile",
+        "description" : "Get a particular profile",
+        "operationId" : "GetProfile",
+        "parameters" : [ {
+          "name" : "personId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Person"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      },
+      "put" : {
+        "tags" : [ "Person" ],
+        "summary" : "Update a profile",
+        "description" : "Update a profile",
+        "operationId" : "PutProfile",
+        "parameters" : [ {
+          "name" : "personId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Update a Profile",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Person"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Person"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Person" ],
+        "summary" : "Delete a profile",
+        "description" : "Delete a profile",
+        "operationId" : "DeleteProfie",
+        "parameters" : [ {
+          "name" : "personId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "description" : "Authorization token value",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "boolean",
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        }
+      }
+    },
+    "/favourite/{profileId}" : {
+      "summary" : "Get a favourite",
+      "description" : "Get a favourite",
+      "get" : {
+        "tags" : [ "Favourite" ],
+        "summary" : "Get favourites for a profile",
+        "description" : "Get favourites for a profile",
+        "operationId" : "GetFavourites",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "Autorization"
+          }
+        }, {
+          "name" : "profileId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ShortProfile"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "Favourite" ],
+        "summary" : "Delete a favourite profile",
+        "description" : "Delete a favourite profile",
+        "operationId" : "DeleteFavourite",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "description" : "Autorization"
+          }
+        }, {
+          "name" : "profileId",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "favouriteIdToBeDelete",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/favourite" : {
+      "summary" : "Add or remove a favourite",
+      "description" : "Add or remove a favourite",
+      "post" : {
+        "tags" : [ "Favourite" ],
+        "summary" : "Add a favourite profile",
+        "description" : "Add a favourite profile",
+        "operationId" : "AddFavourite",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Update a Profile",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Favourite"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Favourite"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        },
+        "security" : [ {
+          "BearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/Communication" : {
+      "summary" : "Trigger a communication to the preferred profile ",
+      "description" : "Trigger a communication to the preferred profile ",
+      "get" : {
+        "tags" : [ "Communication" ],
+        "summary" : "Get all the communication done till date",
+        "description" : "Get all the communication done till date",
+        "operationId" : "GetCommunication",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "pageNumber",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "range",
+          "in" : "query",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/CommunicationList"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Communication" ],
+        "summary" : "Add a communication",
+        "description" : "Add a communication",
+        "operationId" : "AddCommunication",
+        "parameters" : [ {
+          "name" : "X-Request-Auth",
+          "in" : "header",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Add a communication",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Communication"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/CommunicationList"
+                  },
+                  "x-content-type" : "application/json"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "500" : {
+            "description" : "An error occured while processing the request."
+          },
+          "default" : {
+            "description" : "Default error"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Admin" : {
+        "required" : [ "emailId", "firstName", "lastName" ],
+        "type" : "object",
+        "properties" : {
+          "firstName" : {
+            "type" : "string",
+            "format" : "Alphabets",
+            "example" : "Ram"
+          },
+          "middleName" : {
+            "type" : "string",
+            "format" : "Alphabets",
+            "example" : "kumar"
+          },
+          "lastName" : {
+            "type" : "string",
+            "format" : "Alphabets",
+            "example" : "Sanatani"
+          },
+          "emailId" : {
+            "type" : "string",
+            "format" : "Alpha-Numeric-Special Character@domain.name",
+            "example" : "Ram@gmail.com"
+          }
+        },
+        "xml" : {
+          "name" : "admin"
+        }
+      },
+      "CreatedAdmin" : {
+        "type" : "object",
+        "properties" : {
+          "firstName" : {
+            "type" : "string",
+            "format" : "Alphabets",
+            "example" : "Ram"
+          },
+          "middleName" : {
+            "type" : "string",
+            "format" : "Alphabets",
+            "example" : "kumar"
+          },
+          "lastName" : {
+            "type" : "string",
+            "format" : "Alphabets",
+            "example" : "Sanatani"
+          },
+          "emailId" : {
+            "type" : "string",
+            "format" : "Alpha-Numeric-Special Character@domain.name",
+            "example" : "Ram@gmail.com"
+          },
+          "isActive" : {
+            "type" : "boolean",
+            "format" : "true or false",
+            "example" : true
+          },
+          "isSuperAdmin" : {
+            "type" : "boolean",
+            "format" : "true or false",
+            "example" : true
+          },
+          "createdDateTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "accountLocked" : {
+            "type" : "boolean",
+            "format" : "true or false",
+            "example" : false
+          },
+          "passwordResetDateTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        },
+        "example" : {
+          "accountLocked" : false,
+          "firstName" : "Ram",
+          "lastName" : "Sanatani",
+          "passwordResetDateTime" : "2000-01-23T04:56:07.000+00:00",
+          "createdDateTime" : "2000-01-23T04:56:07.000+00:00",
+          "middleName" : "kumar",
+          "emailId" : "Ram@gmail.com",
+          "isSuperAdmin" : true,
+          "isActive" : true
+        },
+        "xml" : {
+          "name" : "CreatedAdmin"
+        }
+      },
+      "Person" : {
+        "required" : [ "biodataURL", "bodyComplexion", "dateOfBirth", "emailId", "firstName", "gender", "height", "imageURL", "isBride", "isGroom", "lastName", "middleName", "religion", "zodiacSign" ],
+        "type" : "object",
+        "properties" : {
+          "firstName" : {
+            "type" : "string",
+            "format" : "Alphabets",
+            "example" : "Ram"
+          },
+          "middleName" : {
+            "type" : "string",
+            "format" : "Alphabets",
+            "example" : "kumar"
+          },
+          "lastName" : {
+            "type" : "string",
+            "format" : "Alphabets",
+            "example" : "Sanatani"
+          },
+          "dateOfBirth" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "height" : {
+            "type" : "string",
+            "format" : "Alpha-Numeric",
+            "example" : "5 feet 6 inch"
+          },
+          "bodyComplexion" : {
+            "type" : "string"
+          },
+          "gender" : {
+            "type" : "string",
+            "enum" : [ "male", "female" ]
+          },
+          "zodiacSign" : {
+            "type" : "string",
+            "enum" : [ "Aries (Meṣa)", "Taurus (Vṛṣabha)", "Gemini (Mithuna)", "Leo (Siṃha)" ]
+          },
+          "isBride" : {
+            "type" : "boolean",
+            "example" : true
+          },
+          "isGroom" : {
+            "type" : "boolean",
+            "example" : false
+          },
+          "imageURL" : {
+            "type" : "string",
+            "format" : "URL"
+          },
+          "biodataURL" : {
+            "type" : "string",
+            "format" : "URL"
+          },
+          "religion" : {
+            "type" : "string",
+            "enum" : [ "Hindu" ]
+          },
+          "contact" : {
+            "$ref" : "#/components/schemas/Person_contact"
+          },
+          "address" : {
+            "$ref" : "#/components/schemas/Person_address"
+          },
+          "Occupation" : {
+            "$ref" : "#/components/schemas/Person_Occupation"
+          },
+          "MatchPreferance" : {
+            "$ref" : "#/components/schemas/Person_MatchPreferance"
+          },
+          "EducationalQualification" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Education"
+            }
+          },
+          "Relative" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Relative"
+            }
+          }
+        },
+        "example" : {
+          "lastName" : "Sanatani",
+          "Relative" : [ {
+            "name" : "name",
+            "remark" : "remark",
+            "relationship" : "relationship"
+          }, {
+            "name" : "name",
+            "remark" : "remark",
+            "relationship" : "relationship"
+          } ],
+          "address" : {
+            "country" : "country",
+            "city" : "city",
+            "street" : "street",
+            "postalCode" : "postalCode",
+            "state" : "state"
+          },
+          "gender" : "male",
+          "zodiacSign" : "Aries (Meṣa)",
+          "dateOfBirth" : "2000-01-23T04:56:07.000+00:00",
+          "biodataURL" : "biodataURL",
+          "MatchPreferance" : {
+            "remark" : "remark",
+            "preferredChoice" : "preferredChoice"
+          },
+          "religion" : "Hindu",
+          "EducationalQualification" : [ {
+            "name" : "name",
+            "description" : "description"
+          }, {
+            "name" : "name",
+            "description" : "description"
+          } ],
+          "firstName" : "Ram",
+          "isGroom" : false,
+          "Occupation" : {
+            "name" : "name",
+            "description" : "description"
+          },
+          "isBride" : true,
+          "imageURL" : "imageURL",
+          "contact" : {
+            "phoneNumber" : "phoneNumber",
+            "emailId" : "Ram@gmail.com"
+          },
+          "middleName" : "kumar",
+          "height" : "5 feet 6 inch",
+          "bodyComplexion" : "bodyComplexion"
+        },
+        "xml" : {
+          "name" : "Person"
+        }
+      },
+      "Education" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string",
+            "format" : "Educational Course Name"
+          }
+        },
+        "example" : {
+          "name" : "name",
+          "description" : "description"
+        }
+      },
+      "Relative" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "relationship" : {
+            "type" : "string"
+          },
+          "remark" : {
+            "type" : "string",
+            "format" : "mention about relative like occupation and educational qualifications"
+          }
+        },
+        "example" : {
+          "name" : "name",
+          "remark" : "remark",
+          "relationship" : "relationship"
+        }
+      },
+      "Communication" : {
+        "type" : "object",
+        "properties" : {
+          "to" : {
+            "type" : "string"
+          },
+          "from" : {
+            "type" : "string"
+          },
+          "commnicationType" : {
+            "type" : "string",
+            "enum" : [ "email", "sms", "whatsapp" ]
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "subject" : {
+            "type" : "string"
+          },
+          "createdDateTime" : {
+            "type" : "string"
+          },
+          "messageDeliveredStatus" : {
+            "type" : "string",
+            "enum" : [ "success", "failed", "processing" ]
+          }
+        },
+        "example" : {
+          "commnicationType" : "email",
+          "subject" : "subject",
+          "createdDateTime" : "createdDateTime",
+          "from" : "from",
+          "to" : "to",
+          "messageDeliveredStatus" : "success",
+          "message" : "message"
+        }
+      },
+      "Role" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "roleName" : {
+            "type" : "string"
+          },
+          "permissionName" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "example" : {
+          "roleName" : "roleName",
+          "id" : 0,
+          "permissionName" : [ "permissionName", "permissionName" ]
+        }
+      },
+      "ShortProfile" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "middleName" : {
+            "type" : "string"
+          },
+          "imageURL" : {
+            "type" : "string"
+          },
+          "cityName" : {
+            "type" : "string"
+          },
+          "stateName" : {
+            "type" : "string"
+          },
+          "occupationName" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "firstName" : "firstName",
+          "lastName" : "lastName",
+          "cityName" : "cityName",
+          "stateName" : "stateName",
+          "imageURL" : "imageURL",
+          "occupationName" : "occupationName",
+          "middleName" : "middleName",
+          "id" : 0
+        }
+      },
+      "Favourite" : {
+        "type" : "object",
+        "properties" : {
+          "personId" : {
+            "type" : "integer"
+          },
+          "matchid" : {
+            "type" : "integer"
+          }
+        },
+        "example" : {
+          "personId" : 0,
+          "matchid" : 6
+        }
+      },
+      "CommunicationList" : {
+        "type" : "object",
+        "properties" : {
+          "currentPageNumber" : {
+            "type" : "integer"
+          },
+          "range" : {
+            "type" : "integer"
+          },
+          "Communications" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Communication"
+            }
+          }
+        },
+        "example" : {
+          "currentPageNumber" : 0,
+          "Communications" : [ {
+            "commnicationType" : "email",
+            "subject" : "subject",
+            "createdDateTime" : "createdDateTime",
+            "from" : "from",
+            "to" : "to",
+            "messageDeliveredStatus" : "success",
+            "message" : "message"
+          }, {
+            "commnicationType" : "email",
+            "subject" : "subject",
+            "createdDateTime" : "createdDateTime",
+            "from" : "from",
+            "to" : "to",
+            "messageDeliveredStatus" : "success",
+            "message" : "message"
+          } ],
+          "range" : 6
+        }
+      },
+      "Person_contact" : {
+        "type" : "object",
+        "properties" : {
+          "phoneNumber" : {
+            "type" : "string"
+          },
+          "emailId" : {
+            "type" : "string",
+            "format" : "Alpha-Numeric-Special Character@domain.name",
+            "example" : "Ram@gmail.com"
+          }
+        },
+        "example" : {
+          "phoneNumber" : "phoneNumber",
+          "emailId" : "Ram@gmail.com"
+        }
+      },
+      "Person_address" : {
+        "type" : "object",
+        "properties" : {
+          "street" : {
+            "type" : "string"
+          },
+          "city" : {
+            "type" : "string"
+          },
+          "state" : {
+            "type" : "string"
+          },
+          "postalCode" : {
+            "type" : "string"
+          },
+          "country" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "country" : "country",
+          "city" : "city",
+          "street" : "street",
+          "postalCode" : "postalCode",
+          "state" : "state"
+        }
+      },
+      "Person_Occupation" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "name" : "name",
+          "description" : "description"
+        }
+      },
+      "Person_MatchPreferance" : {
+        "type" : "object",
+        "properties" : {
+          "preferredChoice" : {
+            "type" : "string"
+          },
+          "remark" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "remark" : "remark",
+          "preferredChoice" : "preferredChoice"
+        }
+      }
+    },
+    "securitySchemes" : {
+      "BasicAuth" : {
+        "type" : "http",
+        "scheme" : "basic"
+      },
+      "BearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      },
+      "SSO_auth" : {
+        "type" : "oauth2",
+        "flows" : {
+          "implicit" : {
+            "authorizationUrl" : "https://localhost:3002/oauth/authorize",
+            "scopes" : {
+              "write:pets" : "modify data",
+              "read:pets" : "read data"
+            }
+          }
+        }
+      },
+      "api_key" : {
+        "type" : "apiKey",
+        "name" : "api_key",
+        "in" : "header"
+      }
+    }
+  }
+}
