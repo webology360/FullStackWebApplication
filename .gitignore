@@ -1,0 +1,20 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/FullstackWeb/copilot-chat/46236422/sessions
+/.vs/FullstackWeb/FileContentIndex
+/.vs/slnx.sqlite
+*.json
+/BackendServices/matrimonialwebapi/.vs/matrimonial/copilot-chat/46236422/sessions/84ee74d9-8be4-499e-a162-d95202b7f84b
+/BackendServices/matrimonialwebapi/.vs/matrimonial/DesignTimeBuild/.dtbcache.v2
+/BackendServices/matrimonialwebapi/.vs/matrimonial/FileContentIndex/81fae031-0688-4afd-8e28-c64607e41811.vsidx
+*.vsidx
+*.suo
+/BackendServices/matrimonialwebapi/.vs/matrimonial/v17/.futdcache.v2
+/BackendServices/matrimonialwebapi/.vs/matrimonial/v17/.suo
+/BackendServices/matrimonialwebapi/.vs/matrimonial/v17/DocumentLayout.json
+*.wsuo
+/BackendServices/matrimonialwebapi/.vs/ProjectEvaluation/matrimonial.metadata.v8.bin
+/BackendServices/matrimonialwebapi/.vs/ProjectEvaluation/matrimonial.projects.v8.bin
+/BackendServices/matrimonialwebapi/.vs/ProjectEvaluation/matrimonial.strings.v8.bin

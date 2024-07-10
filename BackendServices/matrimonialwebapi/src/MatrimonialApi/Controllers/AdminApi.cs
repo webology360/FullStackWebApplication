@@ -14,19 +14,29 @@ using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using IO.Swagger.Attributes;
-using IO.Swagger.Security;
+using MatrimonialApi.Attributes;
+using MatrimonialApi.Security;
 using Microsoft.AspNetCore.Authorization;
-using IO.Swagger.Models;
+using MatrimonialApi.Models;
 
-namespace IO.Swagger.Controllers
+namespace MatrimonialApi.Controllers
 { 
     /// <summary>
     /// 
     /// </summary>
     [ApiController]
     public class AdminApiController : ControllerBase
-    { 
+    {
+        private readonly IAdminService _adminService;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AdminApiController"/> class.
+        /// </summary>
+        /// <param name="adminService">The admin service.</param>
+        public AdminApiController(IAdminService adminService)
+        {
+            _adminService = adminService;
+        }
+
         /// <summary>
         /// Add a admin to the system
         /// </summary>

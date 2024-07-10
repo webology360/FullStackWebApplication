@@ -21,8 +21,8 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using IO.Swagger.Filters;
-using IO.Swagger.Security;
+using MatrimonialApi.Filters;
+using MatrimonialApi.Security;
 
 namespace IO.Swagger
 {
@@ -101,6 +101,9 @@ namespace IO.Swagger
                     // Use [ValidateModelState] on Actions to actually validate it in C# as well!
                     c.OperationFilter<GeneratePathParamsValidationFilter>();
                 });
+            
+            //Service injection
+            //services.AddScoped<IAdminService, AdminService>();
         }
 
         /// <summary>

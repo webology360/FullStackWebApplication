@@ -14,12 +14,12 @@ using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using IO.Swagger.Attributes;
-using IO.Swagger.Security;
+using MatrimonialApi.Attributes;
+using MatrimonialApi.Security;
 using Microsoft.AspNetCore.Authorization;
-using IO.Swagger.Models;
+using MatrimonialApi.Models;
 
-namespace IO.Swagger.Controllers
+namespace MatrimonialApi.Controllers
 { 
     /// <summary>
     /// 
