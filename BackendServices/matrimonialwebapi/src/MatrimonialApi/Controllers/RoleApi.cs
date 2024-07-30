@@ -42,7 +42,7 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("RoleGet")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<Role>), description: "Successful operation")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<RoleDTO>), description: "Successful operation")]
         public virtual IActionResult RoleGet([FromHeader]string xRequestAuth)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
@@ -63,8 +63,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "[ {\n  \"roleName\" : \"roleName\",\n  \"id\" : 0,\n  \"permissionName\" : [ \"permissionName\", \"permissionName\" ]\n}, {\n  \"roleName\" : \"roleName\",\n  \"id\" : 0,\n  \"permissionName\" : [ \"permissionName\", \"permissionName\" ]\n} ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<Role>>(exampleJson)
-                        : default(List<Role>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<RoleDTO>>(exampleJson)
+                        : default(List<RoleDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -83,7 +83,7 @@ namespace MatrimonialApi.Controllers
         [Route("/api/role/{roleId}")]
         [ValidateModelState]
         [SwaggerOperation("RoleRoleIdGet")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<Role>), description: "Successful operation")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<RoleDTO>), description: "Successful operation")]
         public virtual IActionResult RoleRoleIdGet([FromRoute][Required]string roleId, [FromHeader]string xRequestAuth)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
@@ -104,8 +104,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "[ {\n  \"roleName\" : \"roleName\",\n  \"id\" : 0,\n  \"permissionName\" : [ \"permissionName\", \"permissionName\" ]\n}, {\n  \"roleName\" : \"roleName\",\n  \"id\" : 0,\n  \"permissionName\" : [ \"permissionName\", \"permissionName\" ]\n} ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<Role>>(exampleJson)
-                        : default(List<Role>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<RoleDTO>>(exampleJson)
+                        : default(List<RoleDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
     }

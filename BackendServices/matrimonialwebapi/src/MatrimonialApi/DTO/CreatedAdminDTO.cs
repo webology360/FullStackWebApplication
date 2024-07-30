@@ -24,12 +24,11 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Admin : IEquatable<Admin>
+    public partial class CreateAdminDTO : IEquatable<CreateAdminDTO>
     { 
         /// <summary>
         /// Gets or Sets FirstName
         /// </summary>
-        [Required]
 
         [DataMember(Name="firstName")]
         public string FirstName { get; set; }
@@ -44,7 +43,6 @@ namespace MatrimonialApi.Models
         /// <summary>
         /// Gets or Sets LastName
         /// </summary>
-        [Required]
 
         [DataMember(Name="lastName")]
         public string LastName { get; set; }
@@ -52,10 +50,44 @@ namespace MatrimonialApi.Models
         /// <summary>
         /// Gets or Sets EmailId
         /// </summary>
-        [Required]
 
         [DataMember(Name="emailId")]
         public string EmailId { get; set; }
+
+        /// <summary>
+        /// Gets or Sets IsActive
+        /// </summary>
+
+        [DataMember(Name="isActive")]
+        public bool? IsActive { get; set; }
+
+        /// <summary>
+        /// Gets or Sets IsSuperAdmin
+        /// </summary>
+
+        [DataMember(Name="isSuperAdmin")]
+        public bool? IsSuperAdmin { get; set; }
+
+        /// <summary>
+        /// Gets or Sets CreatedDateTime
+        /// </summary>
+
+        [DataMember(Name="createdDateTime")]
+        public DateTime? CreatedDateTime { get; set; }
+
+        /// <summary>
+        /// Gets or Sets AccountLocked
+        /// </summary>
+
+        [DataMember(Name="accountLocked")]
+        public bool? AccountLocked { get; set; }
+
+        /// <summary>
+        /// Gets or Sets PasswordResetDateTime
+        /// </summary>
+
+        [DataMember(Name="passwordResetDateTime")]
+        public DateTime? PasswordResetDateTime { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -64,11 +96,16 @@ namespace MatrimonialApi.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Admin {\n");
+            sb.Append("class CreateAdmin {\n");
             sb.Append("  FirstName: ").Append(FirstName).Append("\n");
             sb.Append("  MiddleName: ").Append(MiddleName).Append("\n");
             sb.Append("  LastName: ").Append(LastName).Append("\n");
             sb.Append("  EmailId: ").Append(EmailId).Append("\n");
+            sb.Append("  IsActive: ").Append(IsActive).Append("\n");
+            sb.Append("  IsSuperAdmin: ").Append(IsSuperAdmin).Append("\n");
+            sb.Append("  CreatedDateTime: ").Append(CreatedDateTime).Append("\n");
+            sb.Append("  AccountLocked: ").Append(AccountLocked).Append("\n");
+            sb.Append("  PasswordResetDateTime: ").Append(PasswordResetDateTime).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -91,15 +128,15 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Admin)obj);
+            return obj.GetType() == GetType() && Equals((CreateAdminDTO)obj);
         }
 
         /// <summary>
-        /// Returns true if Admin instances are equal
+        /// Returns true if CreateAdmin instances are equal
         /// </summary>
-        /// <param name="other">Instance of Admin to be compared</param>
+        /// <param name="other">Instance of CreateAdmin to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Admin other)
+        public bool Equals(CreateAdminDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -124,6 +161,31 @@ namespace MatrimonialApi.Models
                     EmailId == other.EmailId ||
                     EmailId != null &&
                     EmailId.Equals(other.EmailId)
+                ) && 
+                (
+                    IsActive == other.IsActive ||
+                    IsActive != null &&
+                    IsActive.Equals(other.IsActive)
+                ) && 
+                (
+                    IsSuperAdmin == other.IsSuperAdmin ||
+                    IsSuperAdmin != null &&
+                    IsSuperAdmin.Equals(other.IsSuperAdmin)
+                ) && 
+                (
+                    CreatedDateTime == other.CreatedDateTime ||
+                    CreatedDateTime != null &&
+                    CreatedDateTime.Equals(other.CreatedDateTime)
+                ) && 
+                (
+                    AccountLocked == other.AccountLocked ||
+                    AccountLocked != null &&
+                    AccountLocked.Equals(other.AccountLocked)
+                ) && 
+                (
+                    PasswordResetDateTime == other.PasswordResetDateTime ||
+                    PasswordResetDateTime != null &&
+                    PasswordResetDateTime.Equals(other.PasswordResetDateTime)
                 );
         }
 
@@ -145,6 +207,16 @@ namespace MatrimonialApi.Models
                     hashCode = hashCode * 59 + LastName.GetHashCode();
                     if (EmailId != null)
                     hashCode = hashCode * 59 + EmailId.GetHashCode();
+                    if (IsActive != null)
+                    hashCode = hashCode * 59 + IsActive.GetHashCode();
+                    if (IsSuperAdmin != null)
+                    hashCode = hashCode * 59 + IsSuperAdmin.GetHashCode();
+                    if (CreatedDateTime != null)
+                    hashCode = hashCode * 59 + CreatedDateTime.GetHashCode();
+                    if (AccountLocked != null)
+                    hashCode = hashCode * 59 + AccountLocked.GetHashCode();
+                    if (PasswordResetDateTime != null)
+                    hashCode = hashCode * 59 + PasswordResetDateTime.GetHashCode();
                 return hashCode;
             }
         }
@@ -152,12 +224,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Admin left, Admin right)
+        public static bool operator ==(CreateAdminDTO left, CreateAdminDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Admin left, Admin right)
+        public static bool operator !=(CreateAdminDTO left, CreateAdminDTO right)
         {
             return !Equals(left, right);
         }

@@ -24,28 +24,28 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Role : IEquatable<Role>
+    public partial class CommunicationListDTO : IEquatable<CommunicationListDTO>
     { 
         /// <summary>
-        /// Gets or Sets Id
+        /// Gets or Sets CurrentPageNumber
         /// </summary>
 
-        [DataMember(Name="id")]
-        public int? Id { get; set; }
+        [DataMember(Name="currentPageNumber")]
+        public int? CurrentPageNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets RoleName
+        /// Gets or Sets Range
         /// </summary>
 
-        [DataMember(Name="roleName")]
-        public string RoleName { get; set; }
+        [DataMember(Name="range")]
+        public int? Range { get; set; }
 
         /// <summary>
-        /// Gets or Sets PermissionName
+        /// Gets or Sets Communications
         /// </summary>
 
-        [DataMember(Name="permissionName")]
-        public List<string> PermissionName { get; set; }
+        [DataMember(Name="Communications")]
+        public List<CommunicationDTO> Communications { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -54,10 +54,10 @@ namespace MatrimonialApi.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Role {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  RoleName: ").Append(RoleName).Append("\n");
-            sb.Append("  PermissionName: ").Append(PermissionName).Append("\n");
+            sb.Append("class CommunicationList {\n");
+            sb.Append("  CurrentPageNumber: ").Append(CurrentPageNumber).Append("\n");
+            sb.Append("  Range: ").Append(Range).Append("\n");
+            sb.Append("  Communications: ").Append(Communications).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -80,34 +80,34 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Role)obj);
+            return obj.GetType() == GetType() && Equals((CommunicationListDTO)obj);
         }
 
         /// <summary>
-        /// Returns true if Role instances are equal
+        /// Returns true if CommunicationList instances are equal
         /// </summary>
-        /// <param name="other">Instance of Role to be compared</param>
+        /// <param name="other">Instance of CommunicationList to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Role other)
+        public bool Equals(CommunicationListDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    Id == other.Id ||
-                    Id != null &&
-                    Id.Equals(other.Id)
+                    CurrentPageNumber == other.CurrentPageNumber ||
+                    CurrentPageNumber != null &&
+                    CurrentPageNumber.Equals(other.CurrentPageNumber)
                 ) && 
                 (
-                    RoleName == other.RoleName ||
-                    RoleName != null &&
-                    RoleName.Equals(other.RoleName)
+                    Range == other.Range ||
+                    Range != null &&
+                    Range.Equals(other.Range)
                 ) && 
                 (
-                    PermissionName == other.PermissionName ||
-                    PermissionName != null &&
-                    PermissionName.SequenceEqual(other.PermissionName)
+                    Communications == other.Communications ||
+                    Communications != null &&
+                    Communications.SequenceEqual(other.Communications)
                 );
         }
 
@@ -121,12 +121,12 @@ namespace MatrimonialApi.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (Id != null)
-                    hashCode = hashCode * 59 + Id.GetHashCode();
-                    if (RoleName != null)
-                    hashCode = hashCode * 59 + RoleName.GetHashCode();
-                    if (PermissionName != null)
-                    hashCode = hashCode * 59 + PermissionName.GetHashCode();
+                    if (CurrentPageNumber != null)
+                    hashCode = hashCode * 59 + CurrentPageNumber.GetHashCode();
+                    if (Range != null)
+                    hashCode = hashCode * 59 + Range.GetHashCode();
+                    if (Communications != null)
+                    hashCode = hashCode * 59 + Communications.GetHashCode();
                 return hashCode;
             }
         }
@@ -134,12 +134,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Role left, Role right)
+        public static bool operator ==(CommunicationListDTO left, CommunicationListDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Role left, Role right)
+        public static bool operator !=(CommunicationListDTO left, CommunicationListDTO right)
         {
             return !Equals(left, right);
         }

@@ -24,7 +24,7 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Communication : IEquatable<Communication>
+    public partial class CommunicationDTO : IEquatable<CommunicationDTO>
     { 
         /// <summary>
         /// Gets or Sets To
@@ -156,7 +156,7 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Communication)obj);
+            return obj.GetType() == GetType() && Equals((CommunicationDTO)obj);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace MatrimonialApi.Models
         /// </summary>
         /// <param name="other">Instance of Communication to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Communication other)
+        public bool Equals(CommunicationDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -238,12 +238,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Communication left, Communication right)
+        public static bool operator ==(CommunicationDTO left, CommunicationDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Communication left, Communication right)
+        public static bool operator !=(CommunicationDTO left, CommunicationDTO right)
         {
             return !Equals(left, right);
         }

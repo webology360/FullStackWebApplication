@@ -24,7 +24,7 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Favourite : IEquatable<Favourite>
+    public partial class FavouriteDTO : IEquatable<FavouriteDTO>
     { 
         /// <summary>
         /// Gets or Sets PersonId
@@ -72,7 +72,7 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Favourite)obj);
+            return obj.GetType() == GetType() && Equals((FavouriteDTO)obj);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace MatrimonialApi.Models
         /// </summary>
         /// <param name="other">Instance of Favourite to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Favourite other)
+        public bool Equals(FavouriteDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -119,12 +119,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Favourite left, Favourite right)
+        public static bool operator ==(FavouriteDTO left, FavouriteDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Favourite left, Favourite right)
+        public static bool operator !=(FavouriteDTO left, FavouriteDTO right)
         {
             return !Equals(left, right);
         }

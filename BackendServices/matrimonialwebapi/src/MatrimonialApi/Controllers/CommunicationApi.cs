@@ -42,8 +42,8 @@ namespace MatrimonialApi.Controllers
         [Route("/api/Communication")]
         [ValidateModelState]
         [SwaggerOperation("AddCommunication")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<CommunicationList>), description: "Successful operation")]
-        public virtual IActionResult AddCommunication([FromBody]Communication body, [FromHeader][Required()]string xRequestAuth)
+        [SwaggerResponse(statusCode: 200, type: typeof(List<CommunicationListDTO>), description: "Successful operation")]
+        public virtual IActionResult AddCommunication([FromBody]CommunicationDTO body, [FromHeader][Required()]string xRequestAuth)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(List<CommunicationList>));
@@ -63,8 +63,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "[ {\n  \"currentPageNumber\" : 0,\n  \"Communications\" : [ {\n    \"commnicationType\" : \"email\",\n    \"subject\" : \"subject\",\n    \"createdDateTime\" : \"createdDateTime\",\n    \"from\" : \"from\",\n    \"to\" : \"to\",\n    \"messageDeliveredStatus\" : \"success\",\n    \"message\" : \"message\"\n  }, {\n    \"commnicationType\" : \"email\",\n    \"subject\" : \"subject\",\n    \"createdDateTime\" : \"createdDateTime\",\n    \"from\" : \"from\",\n    \"to\" : \"to\",\n    \"messageDeliveredStatus\" : \"success\",\n    \"message\" : \"message\"\n  } ],\n  \"range\" : 6\n}, {\n  \"currentPageNumber\" : 0,\n  \"Communications\" : [ {\n    \"commnicationType\" : \"email\",\n    \"subject\" : \"subject\",\n    \"createdDateTime\" : \"createdDateTime\",\n    \"from\" : \"from\",\n    \"to\" : \"to\",\n    \"messageDeliveredStatus\" : \"success\",\n    \"message\" : \"message\"\n  }, {\n    \"commnicationType\" : \"email\",\n    \"subject\" : \"subject\",\n    \"createdDateTime\" : \"createdDateTime\",\n    \"from\" : \"from\",\n    \"to\" : \"to\",\n    \"messageDeliveredStatus\" : \"success\",\n    \"message\" : \"message\"\n  } ],\n  \"range\" : 6\n} ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<CommunicationList>>(exampleJson)
-                        : default(List<CommunicationList>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<CommunicationListDTO>>(exampleJson)
+                        : default(List<CommunicationListDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -84,7 +84,7 @@ namespace MatrimonialApi.Controllers
         [Route("/api/Communication")]
         [ValidateModelState]
         [SwaggerOperation("GetCommunication")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<CommunicationList>), description: "Successful operation")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<CommunicationListDTO>), description: "Successful operation")]
         public virtual IActionResult GetCommunication([FromHeader][Required()]string xRequestAuth, [FromQuery][Required()]int? pageNumber, [FromQuery][Required()]int? range)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
@@ -105,8 +105,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "[ {\n  \"currentPageNumber\" : 0,\n  \"Communications\" : [ {\n    \"commnicationType\" : \"email\",\n    \"subject\" : \"subject\",\n    \"createdDateTime\" : \"createdDateTime\",\n    \"from\" : \"from\",\n    \"to\" : \"to\",\n    \"messageDeliveredStatus\" : \"success\",\n    \"message\" : \"message\"\n  }, {\n    \"commnicationType\" : \"email\",\n    \"subject\" : \"subject\",\n    \"createdDateTime\" : \"createdDateTime\",\n    \"from\" : \"from\",\n    \"to\" : \"to\",\n    \"messageDeliveredStatus\" : \"success\",\n    \"message\" : \"message\"\n  } ],\n  \"range\" : 6\n}, {\n  \"currentPageNumber\" : 0,\n  \"Communications\" : [ {\n    \"commnicationType\" : \"email\",\n    \"subject\" : \"subject\",\n    \"createdDateTime\" : \"createdDateTime\",\n    \"from\" : \"from\",\n    \"to\" : \"to\",\n    \"messageDeliveredStatus\" : \"success\",\n    \"message\" : \"message\"\n  }, {\n    \"commnicationType\" : \"email\",\n    \"subject\" : \"subject\",\n    \"createdDateTime\" : \"createdDateTime\",\n    \"from\" : \"from\",\n    \"to\" : \"to\",\n    \"messageDeliveredStatus\" : \"success\",\n    \"message\" : \"message\"\n  } ],\n  \"range\" : 6\n} ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<CommunicationList>>(exampleJson)
-                        : default(List<CommunicationList>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<CommunicationListDTO>>(exampleJson)
+                        : default(List<CommunicationListDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
     }

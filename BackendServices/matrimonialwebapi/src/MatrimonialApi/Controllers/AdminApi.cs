@@ -18,6 +18,8 @@ using MatrimonialApi.Attributes;
 using MatrimonialApi.Security;
 using Microsoft.AspNetCore.Authorization;
 using MatrimonialApi.Models;
+using MatrimonialApi.Interface;
+using System.Threading.Tasks;
 
 namespace MatrimonialApi.Controllers
 { 
@@ -28,6 +30,7 @@ namespace MatrimonialApi.Controllers
     public class AdminApiController : ControllerBase
     {
         private readonly IAdminService _adminService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminApiController"/> class.
         /// </summary>
@@ -38,11 +41,11 @@ namespace MatrimonialApi.Controllers
         }
 
         /// <summary>
-        /// Add a admin to the system
+        /// Add a Admin User
         /// </summary>
-        /// <remarks>Add a admin to the system</remarks>
-        /// <param name="body">Create a new admin</param>
-        /// <param name="xRequestAuth">Authorization token value</param>
+        /// <remarks> Add a Admin User</remarks>
+        /// <param name="body"> Add a Admin User</param>
+        /// <param name="xRequestAuth"></param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
@@ -53,11 +56,11 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("AddAdmin")]
-        [SwaggerResponse(statusCode: 200, type: typeof(CreatedAdmin), description: "Successful operation")]
-        public virtual IActionResult AddAdmin([FromBody]Admin body, [FromHeader]string xRequestAuth)
-        { 
+        [SwaggerResponse(statusCode: 200, type: typeof(AdminDTO), description: "Successful operation")]
+        public virtual async Task<IActionResult> AddAdmin([FromBody] AdminDTO body, [FromHeader] string xRequestAuth)
+        {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(CreatedAdmin));
+            // return StatusCode(200, default(CreateAdmin));
 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
@@ -70,20 +73,15 @@ namespace MatrimonialApi.Controllers
 
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
-            string exampleJson = null;
-            exampleJson = "{\n  \"accountLocked\" : false,\n  \"firstName\" : \"Ram\",\n  \"lastName\" : \"Sanatani\",\n  \"passwordResetDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"createdDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"middleName\" : \"kumar\",\n  \"emailId\" : \"Ram@gmail.com\",\n  \"isSuperAdmin\" : true,\n  \"isActive\" : true\n}";
-            
-                        var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<CreatedAdmin>(exampleJson)
-                        : default(CreatedAdmin);            //TODO: Change the data returned
-            return new ObjectResult(example);
+            var result = await _adminService.AddAdminAsync(body);
+            return Ok(result);
         }
 
         /// <summary>
-        /// Get all admins
+        /// Get Admin Users
         /// </summary>
-        /// <remarks>Get all the admins present in the system</remarks>
-        /// <param name="xRequestAuth">Authorization token value</param>
+        /// <remarks> Get Admin Users</remarks>
+        /// <param name="xRequestAuth"></param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
@@ -94,11 +92,11 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("AdminGet")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<CreatedAdmin>), description: "Successful operation")]
-        public virtual IActionResult AdminGet([FromHeader]string xRequestAuth)
-        { 
+        [SwaggerResponse(statusCode: 200, type: typeof(List<AdminDTO>), description: "Successful operation")]
+        public virtual async Task<IActionResult> AdminGet([FromHeader] string xRequestAuth)
+        {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(List<CreatedAdmin>));
+            // return StatusCode(200, default(List<CreateAdmin>));
 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
@@ -111,21 +109,16 @@ namespace MatrimonialApi.Controllers
 
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
-            string exampleJson = null;
-            exampleJson = "[ {\n  \"accountLocked\" : false,\n  \"firstName\" : \"Ram\",\n  \"lastName\" : \"Sanatani\",\n  \"passwordResetDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"createdDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"middleName\" : \"kumar\",\n  \"emailId\" : \"Ram@gmail.com\",\n  \"isSuperAdmin\" : true,\n  \"isActive\" : true\n}, {\n  \"accountLocked\" : false,\n  \"firstName\" : \"Ram\",\n  \"lastName\" : \"Sanatani\",\n  \"passwordResetDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"createdDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"middleName\" : \"kumar\",\n  \"emailId\" : \"Ram@gmail.com\",\n  \"isSuperAdmin\" : true,\n  \"isActive\" : true\n} ]";
-            
-                        var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<CreatedAdmin>>(exampleJson)
-                        : default(List<CreatedAdmin>);            //TODO: Change the data returned
-            return new ObjectResult(example);
+            var admins = await _adminService.GetAllAdminsAsync();
+            return Ok(admins);
         }
 
         /// <summary>
-        /// Delete a admin
+        /// Delete a admin user
         /// </summary>
-        /// <remarks>Delete a admin</remarks>
+        /// <remarks>Delete a admin user</remarks>
+        /// <param name="xRequestAuth"></param>
         /// <param name="adminId"></param>
-        /// <param name="xRequestAuth">Authorization token value</param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
@@ -135,8 +128,8 @@ namespace MatrimonialApi.Controllers
         [Route("/api/admin/{adminId}")]
         [ValidateModelState]
         [SwaggerOperation("DeleteAdmin")]
-        public virtual IActionResult DeleteAdmin([FromRoute][Required]string adminId, [FromHeader][Required()]string xRequestAuth)
-        { 
+        public virtual async Task<IActionResult> DeleteAdmin([FromRoute][Required] string adminId, [FromHeader][Required()] string xRequestAuth)
+        {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200);
 
@@ -152,15 +145,17 @@ namespace MatrimonialApi.Controllers
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
 
-            throw new NotImplementedException();
+            await _adminService.DeleteAdminAsync(adminId);
+            return NoContent(); // Assuming deletion does not return a resource
+
         }
 
         /// <summary>
-        /// Get a admin from the system
+        /// Get a admin user
         /// </summary>
-        /// <remarks>Get a admin to the system</remarks>
+        /// <remarks>get a admin user</remarks>
+        /// <param name="xRequestAuth"></param>
         /// <param name="adminId"></param>
-        /// <param name="xRequestAuth">Authorization token value</param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
@@ -171,11 +166,11 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("GetAdmin")]
-        [SwaggerResponse(statusCode: 200, type: typeof(CreatedAdmin), description: "Successful operation")]
-        public virtual IActionResult GetAdmin([FromRoute][Required]string adminId, [FromHeader][Required()]string xRequestAuth)
-        { 
+        [SwaggerResponse(statusCode: 200, type: typeof(AdminDTO), description: "Successful operation")]
+        public virtual async Task<IActionResult> GetAdmin([FromRoute][Required] string adminId, [FromHeader][Required()] string xRequestAuth)
+        {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(CreatedAdmin));
+            // return StatusCode(200, default(CreateAdmin));
 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
@@ -188,22 +183,16 @@ namespace MatrimonialApi.Controllers
 
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
-            string exampleJson = null;
-            exampleJson = "{\n  \"accountLocked\" : false,\n  \"firstName\" : \"Ram\",\n  \"lastName\" : \"Sanatani\",\n  \"passwordResetDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"createdDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"middleName\" : \"kumar\",\n  \"emailId\" : \"Ram@gmail.com\",\n  \"isSuperAdmin\" : true,\n  \"isActive\" : true\n}";
-            
-                        var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<CreatedAdmin>(exampleJson)
-                        : default(CreatedAdmin);            //TODO: Change the data returned
-            return new ObjectResult(example);
+            var admin = await _adminService.GetAdminByIdAsync(adminId);
+            return Ok(admin);
         }
 
         /// <summary>
-        /// Update a admin
+        /// Update a admin user
         /// </summary>
-        /// <remarks>Update a admin</remarks>
+        /// <remarks>Update a admin user</remarks>
+        /// <param name="xRequestAuth"></param>
         /// <param name="body">Update a admin</param>
-        /// <param name="adminId"></param>
-        /// <param name="xRequestAuth">Authorization token value</param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
@@ -213,8 +202,8 @@ namespace MatrimonialApi.Controllers
         [Route("/api/admin/{adminId}")]
         [ValidateModelState]
         [SwaggerOperation("UpdateAdmin")]
-        public virtual IActionResult UpdateAdmin([FromBody]Admin body, [FromRoute][Required]string adminId, [FromHeader]string xRequestAuth)
-        { 
+        public virtual async Task<IActionResult> UpdateAdmin([FromBody] AdminDTO body, [FromRoute][Required] string adminId, [FromHeader] string xRequestAuth)
+        {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200);
 
@@ -230,7 +219,8 @@ namespace MatrimonialApi.Controllers
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
 
-            throw new NotImplementedException();
+            var result = await _adminService.AddAdminAsync(body);
+            return Ok(result);
         }
     }
 }

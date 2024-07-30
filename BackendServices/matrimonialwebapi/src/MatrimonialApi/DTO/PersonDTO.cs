@@ -24,7 +24,7 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Person : IEquatable<Person>
+    public partial class PersonDTO : IEquatable<PersonDTO>
     { 
         /// <summary>
         /// Gets or Sets FirstName
@@ -191,42 +191,42 @@ namespace MatrimonialApi.Models
         /// </summary>
 
         [DataMember(Name="contact")]
-        public PersonContact Contact { get; set; }
+        public PersonContactDTO Contact { get; set; }
 
         /// <summary>
         /// Gets or Sets Address
         /// </summary>
 
         [DataMember(Name="address")]
-        public PersonAddress Address { get; set; }
+        public PersonAddressDTO Address { get; set; }
 
         /// <summary>
         /// Gets or Sets Occupation
         /// </summary>
 
         [DataMember(Name="Occupation")]
-        public PersonOccupation Occupation { get; set; }
+        public PersonOccupationDTO Occupation { get; set; }
 
         /// <summary>
         /// Gets or Sets MatchPreferance
         /// </summary>
 
         [DataMember(Name="MatchPreferance")]
-        public PersonMatchPreferance MatchPreferance { get; set; }
+        public PersonMatchPreferanceDTO MatchPreferance { get; set; }
 
         /// <summary>
         /// Gets or Sets EducationalQualification
         /// </summary>
 
         [DataMember(Name="EducationalQualification")]
-        public List<Education> EducationalQualification { get; set; }
+        public List<EducationDTO> EducationalQualification { get; set; }
 
         /// <summary>
         /// Gets or Sets Relative
         /// </summary>
 
         [DataMember(Name="Relative")]
-        public List<Relative> Relative { get; set; }
+        public List<RelativeDTO> Relative { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -277,7 +277,7 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Person)obj);
+            return obj.GetType() == GetType() && Equals((PersonDTO)obj);
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace MatrimonialApi.Models
         /// </summary>
         /// <param name="other">Instance of Person to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Person other)
+        public bool Equals(PersonDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -443,12 +443,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Person left, Person right)
+        public static bool operator ==(PersonDTO left, PersonDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Person left, Person right)
+        public static bool operator !=(PersonDTO left, PersonDTO right)
         {
             return !Equals(left, right);
         }

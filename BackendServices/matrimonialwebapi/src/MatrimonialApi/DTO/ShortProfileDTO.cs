@@ -24,7 +24,7 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class ShortProfile : IEquatable<ShortProfile>
+    public partial class ShortProfileDTO : IEquatable<ShortProfileDTO>
     { 
         /// <summary>
         /// Gets or Sets Id
@@ -120,7 +120,7 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((ShortProfile)obj);
+            return obj.GetType() == GetType() && Equals((ShortProfileDTO)obj);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace MatrimonialApi.Models
         /// </summary>
         /// <param name="other">Instance of ShortProfile to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ShortProfile other)
+        public bool Equals(ShortProfileDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -209,12 +209,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(ShortProfile left, ShortProfile right)
+        public static bool operator ==(ShortProfileDTO left, ShortProfileDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(ShortProfile left, ShortProfile right)
+        public static bool operator !=(ShortProfileDTO left, ShortProfileDTO right)
         {
             return !Equals(left, right);
         }

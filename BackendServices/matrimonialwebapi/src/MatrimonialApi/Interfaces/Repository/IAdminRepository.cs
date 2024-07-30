@@ -1,41 +1,39 @@
-using System.Threading.Tasks;
-using MatrimonialApi.Models;
+using MatrimonialApi.DBEntity;
 using System.Collections.Generic;
-
-
+using System.Threading.Tasks;
 namespace MatrimonialApi.Interface
 {
     /// <summary>
-    /// Represents the interface for the admin service.
+    /// Admin Repository Interface
     /// </summary>
-    public interface IAdminService
+    public interface IAdminRepository
     {
         /// <summary>
         /// Adds a new admin asynchronously.
         /// </summary>
         /// <param name="admin">The admin to add.</param>
-        /// <returns>The created admin.</returns>
-        Task<AdminDTO> AddAdminAsync(AdminDTO admin);
+        /// <returns>The added admin.</returns>
+        Task<CreateAdmin> AddAdminAsync(CreateAdmin admin);
 
         /// <summary>
-        /// Gets all admins asynchronously.
+        /// Retrieves all admins asynchronously.
         /// </summary>
         /// <returns>A collection of all admins.</returns>
-        Task<IEnumerable<AdminDTO>> GetAllAdminsAsync();
+        Task<IEnumerable<CreateAdmin>> GetAllAdminsAsync();
 
         /// <summary>
-        /// Gets an admin by ID asynchronously.
+        /// Retrieves an admin by ID asynchronously.
         /// </summary>
-        /// <param name="adminId">The ID of the admin.</param>
-        /// <returns>The admin with the specified ID.</returns>
-        Task<AdminDTO> GetAdminByIdAsync(string adminId);
+        /// <param name="adminId">The ID of the admin to retrieve.</param>
+        /// <returns>The retrieved admin.</returns>
+        Task<CreateAdmin> GetAdminByIdAsync(string adminId);
 
         /// <summary>
         /// Updates an admin asynchronously.
         /// </summary>
         /// <param name="adminId">The ID of the admin to update.</param>
         /// <param name="admin">The updated admin.</param>
-        Task UpdateAdminAsync(string adminId, AdminDTO admin);
+        Task UpdateAdminAsync(string adminId, CreateAdmin admin);
 
         /// <summary>
         /// Deletes an admin asynchronously.

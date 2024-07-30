@@ -5,8 +5,12 @@ namespace MatrimonialApi.DBEntity
     /// <summary>
     /// Create Admin
     /// </summary>
-    public partial class CreatedAdmin
+    public partial class CreateAdmin
     {
+        /// <summary>
+        /// Gets or sets the Id of the created admin.
+        /// </summary>
+        public string Id { get; set; }
         /// <summary>
         /// Gets or sets the first name of the created admin.
         /// </summary>

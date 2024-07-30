@@ -24,14 +24,21 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class PersonMatchPreferance : IEquatable<PersonMatchPreferance>
+    public partial class RelativeDTO : IEquatable<RelativeDTO>
     { 
         /// <summary>
-        /// Gets or Sets PreferredChoice
+        /// Gets or Sets Name
         /// </summary>
 
-        [DataMember(Name="preferredChoice")]
-        public string PreferredChoice { get; set; }
+        [DataMember(Name="name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Relationship
+        /// </summary>
+
+        [DataMember(Name="relationship")]
+        public string Relationship { get; set; }
 
         /// <summary>
         /// Gets or Sets Remark
@@ -47,8 +54,9 @@ namespace MatrimonialApi.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class PersonMatchPreferance {\n");
-            sb.Append("  PreferredChoice: ").Append(PreferredChoice).Append("\n");
+            sb.Append("class Relative {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Relationship: ").Append(Relationship).Append("\n");
             sb.Append("  Remark: ").Append(Remark).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -72,24 +80,29 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((PersonMatchPreferance)obj);
+            return obj.GetType() == GetType() && Equals((RelativeDTO)obj);
         }
 
         /// <summary>
-        /// Returns true if PersonMatchPreferance instances are equal
+        /// Returns true if Relative instances are equal
         /// </summary>
-        /// <param name="other">Instance of PersonMatchPreferance to be compared</param>
+        /// <param name="other">Instance of Relative to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PersonMatchPreferance other)
+        public bool Equals(RelativeDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    PreferredChoice == other.PreferredChoice ||
-                    PreferredChoice != null &&
-                    PreferredChoice.Equals(other.PreferredChoice)
+                    Name == other.Name ||
+                    Name != null &&
+                    Name.Equals(other.Name)
+                ) && 
+                (
+                    Relationship == other.Relationship ||
+                    Relationship != null &&
+                    Relationship.Equals(other.Relationship)
                 ) && 
                 (
                     Remark == other.Remark ||
@@ -108,8 +121,10 @@ namespace MatrimonialApi.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (PreferredChoice != null)
-                    hashCode = hashCode * 59 + PreferredChoice.GetHashCode();
+                    if (Name != null)
+                    hashCode = hashCode * 59 + Name.GetHashCode();
+                    if (Relationship != null)
+                    hashCode = hashCode * 59 + Relationship.GetHashCode();
                     if (Remark != null)
                     hashCode = hashCode * 59 + Remark.GetHashCode();
                 return hashCode;
@@ -119,12 +134,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(PersonMatchPreferance left, PersonMatchPreferance right)
+        public static bool operator ==(RelativeDTO left, RelativeDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(PersonMatchPreferance left, PersonMatchPreferance right)
+        public static bool operator !=(RelativeDTO left, RelativeDTO right)
         {
             return !Equals(left, right);
         }

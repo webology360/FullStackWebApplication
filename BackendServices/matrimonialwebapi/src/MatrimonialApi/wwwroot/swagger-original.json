@@ -69,7 +69,7 @@
                 "schema" : {
                   "type" : "array",
                   "items" : {
-                    "$ref" : "#/components/schemas/CreatedAdmin"
+                    "$ref" : "#/components/schemas/CreateAdmin"
                   },
                   "x-content-type" : "application/json"
                 }
@@ -127,7 +127,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreatedAdmin"
+                  "$ref" : "#/components/schemas/CreateAdmin"
                 }
               }
             }
@@ -185,7 +185,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreatedAdmin"
+                  "$ref" : "#/components/schemas/CreateAdmin"
                 }
               }
             }
@@ -520,7 +520,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/CreatedAdmin"
+                  "$ref" : "#/components/schemas/CreateAdmin"
                 }
               }
             }
@@ -1052,7 +1052,7 @@
           "name" : "admin"
         }
       },
-      "CreatedAdmin" : {
+      "CreateAdmin" : {
         "type" : "object",
         "properties" : {
           "firstName" : {
@@ -1111,7 +1111,7 @@
           "isActive" : true
         },
         "xml" : {
-          "name" : "CreatedAdmin"
+          "name" : "CreateAdmin"
         }
       },
       "Person" : {

@@ -43,11 +43,11 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("AddProfile")]
-        [SwaggerResponse(statusCode: 200, type: typeof(CreatedAdmin), description: "Successful operation")]
-        public virtual IActionResult AddProfile([FromBody]Person body, [FromHeader]string xRequestAuth)
+        [SwaggerResponse(statusCode: 200, type: typeof(AdminDTO), description: "Successful operation")]
+        public virtual IActionResult AddProfile([FromBody]PersonDTO body, [FromHeader]string xRequestAuth)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(CreatedAdmin));
+            // return StatusCode(200, default(CreateAdmin));
 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(400);
@@ -64,8 +64,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "{\n  \"accountLocked\" : false,\n  \"firstName\" : \"Ram\",\n  \"lastName\" : \"Sanatani\",\n  \"passwordResetDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"createdDateTime\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"middleName\" : \"kumar\",\n  \"emailId\" : \"Ram@gmail.com\",\n  \"isSuperAdmin\" : true,\n  \"isActive\" : true\n}";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<CreatedAdmin>(exampleJson)
-                        : default(CreatedAdmin);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<AdminDTO>(exampleJson)
+                        : default(AdminDTO);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -126,7 +126,7 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("GetProfile")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<Person>), description: "Successful operation")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<PersonDTO>), description: "Successful operation")]
         public virtual IActionResult GetProfile([FromRoute][Required]string personId, [FromHeader]string xRequestAuth)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
@@ -147,8 +147,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "[ {\n  \"lastName\" : \"Sanatani\",\n  \"Relative\" : [ {\n    \"name\" : \"name\",\n    \"remark\" : \"remark\",\n    \"relationship\" : \"relationship\"\n  }, {\n    \"name\" : \"name\",\n    \"remark\" : \"remark\",\n    \"relationship\" : \"relationship\"\n  } ],\n  \"address\" : {\n    \"country\" : \"country\",\n    \"city\" : \"city\",\n    \"street\" : \"street\",\n    \"postalCode\" : \"postalCode\",\n    \"state\" : \"state\"\n  },\n  \"gender\" : \"male\",\n  \"zodiacSign\" : \"Aries (Meṣa)\",\n  \"dateOfBirth\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"biodataURL\" : \"biodataURL\",\n  \"MatchPreferance\" : {\n    \"remark\" : \"remark\",\n    \"preferredChoice\" : \"preferredChoice\"\n  },\n  \"religion\" : \"Hindu\",\n  \"EducationalQualification\" : [ {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  }, {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  } ],\n  \"firstName\" : \"Ram\",\n  \"isGroom\" : false,\n  \"Occupation\" : {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  },\n  \"isBride\" : true,\n  \"imageURL\" : \"imageURL\",\n  \"contact\" : {\n    \"phoneNumber\" : \"phoneNumber\",\n    \"emailId\" : \"Ram@gmail.com\"\n  },\n  \"middleName\" : \"kumar\",\n  \"height\" : \"5 feet 6 inch\",\n  \"bodyComplexion\" : \"bodyComplexion\"\n}, {\n  \"lastName\" : \"Sanatani\",\n  \"Relative\" : [ {\n    \"name\" : \"name\",\n    \"remark\" : \"remark\",\n    \"relationship\" : \"relationship\"\n  }, {\n    \"name\" : \"name\",\n    \"remark\" : \"remark\",\n    \"relationship\" : \"relationship\"\n  } ],\n  \"address\" : {\n    \"country\" : \"country\",\n    \"city\" : \"city\",\n    \"street\" : \"street\",\n    \"postalCode\" : \"postalCode\",\n    \"state\" : \"state\"\n  },\n  \"gender\" : \"male\",\n  \"zodiacSign\" : \"Aries (Meṣa)\",\n  \"dateOfBirth\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"biodataURL\" : \"biodataURL\",\n  \"MatchPreferance\" : {\n    \"remark\" : \"remark\",\n    \"preferredChoice\" : \"preferredChoice\"\n  },\n  \"religion\" : \"Hindu\",\n  \"EducationalQualification\" : [ {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  }, {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  } ],\n  \"firstName\" : \"Ram\",\n  \"isGroom\" : false,\n  \"Occupation\" : {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  },\n  \"isBride\" : true,\n  \"imageURL\" : \"imageURL\",\n  \"contact\" : {\n    \"phoneNumber\" : \"phoneNumber\",\n    \"emailId\" : \"Ram@gmail.com\"\n  },\n  \"middleName\" : \"kumar\",\n  \"height\" : \"5 feet 6 inch\",\n  \"bodyComplexion\" : \"bodyComplexion\"\n} ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<Person>>(exampleJson)
-                        : default(List<Person>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<PersonDTO>>(exampleJson)
+                        : default(List<PersonDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -169,7 +169,7 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("GetProfiles")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<ShortProfile>), description: "Successful operation")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<ShortProfileDTO>), description: "Successful operation")]
         public virtual IActionResult GetProfiles([FromHeader]string xRequestAuth, [FromQuery]int? pageNumber, [FromQuery]int? range)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
@@ -190,8 +190,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "[ {\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"cityName\" : \"cityName\",\n  \"stateName\" : \"stateName\",\n  \"imageURL\" : \"imageURL\",\n  \"occupationName\" : \"occupationName\",\n  \"middleName\" : \"middleName\",\n  \"id\" : 0\n}, {\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"cityName\" : \"cityName\",\n  \"stateName\" : \"stateName\",\n  \"imageURL\" : \"imageURL\",\n  \"occupationName\" : \"occupationName\",\n  \"middleName\" : \"middleName\",\n  \"id\" : 0\n} ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<ShortProfile>>(exampleJson)
-                        : default(List<ShortProfile>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<ShortProfileDTO>>(exampleJson)
+                        : default(List<ShortProfileDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -211,8 +211,8 @@ namespace MatrimonialApi.Controllers
         [Route("/api/person/{personId}")]
         [ValidateModelState]
         [SwaggerOperation("PutProfile")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<Person>), description: "Successful operation")]
-        public virtual IActionResult PutProfile([FromBody]Person body, [FromRoute][Required]string personId, [FromHeader]string xRequestAuth)
+        [SwaggerResponse(statusCode: 200, type: typeof(List<PersonDTO>), description: "Successful operation")]
+        public virtual IActionResult PutProfile([FromBody]PersonDTO body, [FromRoute][Required]string personId, [FromHeader]string xRequestAuth)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(List<Person>));
@@ -232,8 +232,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "[ {\n  \"lastName\" : \"Sanatani\",\n  \"Relative\" : [ {\n    \"name\" : \"name\",\n    \"remark\" : \"remark\",\n    \"relationship\" : \"relationship\"\n  }, {\n    \"name\" : \"name\",\n    \"remark\" : \"remark\",\n    \"relationship\" : \"relationship\"\n  } ],\n  \"address\" : {\n    \"country\" : \"country\",\n    \"city\" : \"city\",\n    \"street\" : \"street\",\n    \"postalCode\" : \"postalCode\",\n    \"state\" : \"state\"\n  },\n  \"gender\" : \"male\",\n  \"zodiacSign\" : \"Aries (Meṣa)\",\n  \"dateOfBirth\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"biodataURL\" : \"biodataURL\",\n  \"MatchPreferance\" : {\n    \"remark\" : \"remark\",\n    \"preferredChoice\" : \"preferredChoice\"\n  },\n  \"religion\" : \"Hindu\",\n  \"EducationalQualification\" : [ {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  }, {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  } ],\n  \"firstName\" : \"Ram\",\n  \"isGroom\" : false,\n  \"Occupation\" : {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  },\n  \"isBride\" : true,\n  \"imageURL\" : \"imageURL\",\n  \"contact\" : {\n    \"phoneNumber\" : \"phoneNumber\",\n    \"emailId\" : \"Ram@gmail.com\"\n  },\n  \"middleName\" : \"kumar\",\n  \"height\" : \"5 feet 6 inch\",\n  \"bodyComplexion\" : \"bodyComplexion\"\n}, {\n  \"lastName\" : \"Sanatani\",\n  \"Relative\" : [ {\n    \"name\" : \"name\",\n    \"remark\" : \"remark\",\n    \"relationship\" : \"relationship\"\n  }, {\n    \"name\" : \"name\",\n    \"remark\" : \"remark\",\n    \"relationship\" : \"relationship\"\n  } ],\n  \"address\" : {\n    \"country\" : \"country\",\n    \"city\" : \"city\",\n    \"street\" : \"street\",\n    \"postalCode\" : \"postalCode\",\n    \"state\" : \"state\"\n  },\n  \"gender\" : \"male\",\n  \"zodiacSign\" : \"Aries (Meṣa)\",\n  \"dateOfBirth\" : \"2000-01-23T04:56:07.000+00:00\",\n  \"biodataURL\" : \"biodataURL\",\n  \"MatchPreferance\" : {\n    \"remark\" : \"remark\",\n    \"preferredChoice\" : \"preferredChoice\"\n  },\n  \"religion\" : \"Hindu\",\n  \"EducationalQualification\" : [ {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  }, {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  } ],\n  \"firstName\" : \"Ram\",\n  \"isGroom\" : false,\n  \"Occupation\" : {\n    \"name\" : \"name\",\n    \"description\" : \"description\"\n  },\n  \"isBride\" : true,\n  \"imageURL\" : \"imageURL\",\n  \"contact\" : {\n    \"phoneNumber\" : \"phoneNumber\",\n    \"emailId\" : \"Ram@gmail.com\"\n  },\n  \"middleName\" : \"kumar\",\n  \"height\" : \"5 feet 6 inch\",\n  \"bodyComplexion\" : \"bodyComplexion\"\n} ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<Person>>(exampleJson)
-                        : default(List<Person>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<PersonDTO>>(exampleJson)
+                        : default(List<PersonDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
     }

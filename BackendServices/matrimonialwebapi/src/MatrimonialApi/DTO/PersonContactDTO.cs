@@ -24,21 +24,21 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class Education : IEquatable<Education>
+    public partial class PersonContactDTO : IEquatable<PersonContactDTO>
     { 
         /// <summary>
-        /// Gets or Sets Name
+        /// Gets or Sets PhoneNumber
         /// </summary>
 
-        [DataMember(Name="name")]
-        public string Name { get; set; }
+        [DataMember(Name="phoneNumber")]
+        public string PhoneNumber { get; set; }
 
         /// <summary>
-        /// Gets or Sets Description
+        /// Gets or Sets EmailId
         /// </summary>
 
-        [DataMember(Name="description")]
-        public string Description { get; set; }
+        [DataMember(Name="emailId")]
+        public string EmailId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -47,9 +47,9 @@ namespace MatrimonialApi.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Education {\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("class PersonContact {\n");
+            sb.Append("  PhoneNumber: ").Append(PhoneNumber).Append("\n");
+            sb.Append("  EmailId: ").Append(EmailId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -72,29 +72,29 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((Education)obj);
+            return obj.GetType() == GetType() && Equals((PersonContactDTO)obj);
         }
 
         /// <summary>
-        /// Returns true if Education instances are equal
+        /// Returns true if PersonContact instances are equal
         /// </summary>
-        /// <param name="other">Instance of Education to be compared</param>
+        /// <param name="other">Instance of PersonContact to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Education other)
+        public bool Equals(PersonContactDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    Name == other.Name ||
-                    Name != null &&
-                    Name.Equals(other.Name)
+                    PhoneNumber == other.PhoneNumber ||
+                    PhoneNumber != null &&
+                    PhoneNumber.Equals(other.PhoneNumber)
                 ) && 
                 (
-                    Description == other.Description ||
-                    Description != null &&
-                    Description.Equals(other.Description)
+                    EmailId == other.EmailId ||
+                    EmailId != null &&
+                    EmailId.Equals(other.EmailId)
                 );
         }
 
@@ -108,10 +108,10 @@ namespace MatrimonialApi.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (Name != null)
-                    hashCode = hashCode * 59 + Name.GetHashCode();
-                    if (Description != null)
-                    hashCode = hashCode * 59 + Description.GetHashCode();
+                    if (PhoneNumber != null)
+                    hashCode = hashCode * 59 + PhoneNumber.GetHashCode();
+                    if (EmailId != null)
+                    hashCode = hashCode * 59 + EmailId.GetHashCode();
                 return hashCode;
             }
         }
@@ -119,12 +119,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(Education left, Education right)
+        public static bool operator ==(PersonContactDTO left, PersonContactDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Education left, Education right)
+        public static bool operator !=(PersonContactDTO left, PersonContactDTO right)
         {
             return !Equals(left, right);
         }

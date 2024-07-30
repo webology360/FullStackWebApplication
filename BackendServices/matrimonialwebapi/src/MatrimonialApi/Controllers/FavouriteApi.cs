@@ -43,8 +43,8 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("AddFavourite")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<Favourite>), description: "Successful operation")]
-        public virtual IActionResult AddFavourite([FromBody]Favourite body, [FromHeader][Required()]string xRequestAuth)
+        [SwaggerResponse(statusCode: 200, type: typeof(List<FavouriteDTO>), description: "Successful operation")]
+        public virtual IActionResult AddFavourite([FromBody]FavouriteDTO body, [FromHeader][Required()]string xRequestAuth)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(List<Favourite>));
@@ -64,8 +64,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "[ {\n  \"personId\" : 0,\n  \"matchid\" : 6\n}, {\n  \"personId\" : 0,\n  \"matchid\" : 6\n} ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<Favourite>>(exampleJson)
-                        : default(List<Favourite>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<FavouriteDTO>>(exampleJson)
+                        : default(List<FavouriteDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
 
@@ -122,7 +122,7 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("GetFavourites")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<ShortProfile>), description: "Successful operation")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<ShortProfileDTO>), description: "Successful operation")]
         public virtual IActionResult GetFavourites([FromHeader][Required()]string xRequestAuth, [FromRoute][Required]int? profileId)
         { 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
@@ -143,8 +143,8 @@ namespace MatrimonialApi.Controllers
             exampleJson = "[ {\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"cityName\" : \"cityName\",\n  \"stateName\" : \"stateName\",\n  \"imageURL\" : \"imageURL\",\n  \"occupationName\" : \"occupationName\",\n  \"middleName\" : \"middleName\",\n  \"id\" : 0\n}, {\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"cityName\" : \"cityName\",\n  \"stateName\" : \"stateName\",\n  \"imageURL\" : \"imageURL\",\n  \"occupationName\" : \"occupationName\",\n  \"middleName\" : \"middleName\",\n  \"id\" : 0\n} ]";
             
                         var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<List<ShortProfile>>(exampleJson)
-                        : default(List<ShortProfile>);            //TODO: Change the data returned
+                        ? JsonConvert.DeserializeObject<List<ShortProfileDTO>>(exampleJson)
+                        : default(List<ShortProfileDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
         }
     }

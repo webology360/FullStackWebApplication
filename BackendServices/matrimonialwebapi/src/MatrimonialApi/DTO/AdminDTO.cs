@@ -24,42 +24,38 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class PersonAddress : IEquatable<PersonAddress>
+    public partial class AdminDTO : IEquatable<AdminDTO>
     { 
         /// <summary>
-        /// Gets or Sets Street
+        /// Gets or Sets FirstName
         /// </summary>
+        [Required]
 
-        [DataMember(Name="street")]
-        public string Street { get; set; }
+        [DataMember(Name="firstName")]
+        public string FirstName { get; set; }
 
         /// <summary>
-        /// Gets or Sets City
+        /// Gets or Sets MiddleName
         /// </summary>
 
-        [DataMember(Name="city")]
-        public string City { get; set; }
+        [DataMember(Name="middleName")]
+        public string MiddleName { get; set; }
 
         /// <summary>
-        /// Gets or Sets State
+        /// Gets or Sets LastName
         /// </summary>
+        [Required]
 
-        [DataMember(Name="state")]
-        public string State { get; set; }
+        [DataMember(Name="lastName")]
+        public string LastName { get; set; }
 
         /// <summary>
-        /// Gets or Sets PostalCode
+        /// Gets or Sets EmailId
         /// </summary>
+        [Required]
 
-        [DataMember(Name="postalCode")]
-        public string PostalCode { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Country
-        /// </summary>
-
-        [DataMember(Name="country")]
-        public string Country { get; set; }
+        [DataMember(Name="emailId")]
+        public string EmailId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -68,12 +64,11 @@ namespace MatrimonialApi.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class PersonAddress {\n");
-            sb.Append("  Street: ").Append(Street).Append("\n");
-            sb.Append("  City: ").Append(City).Append("\n");
-            sb.Append("  State: ").Append(State).Append("\n");
-            sb.Append("  PostalCode: ").Append(PostalCode).Append("\n");
-            sb.Append("  Country: ").Append(Country).Append("\n");
+            sb.Append("class Admin {\n");
+            sb.Append("  FirstName: ").Append(FirstName).Append("\n");
+            sb.Append("  MiddleName: ").Append(MiddleName).Append("\n");
+            sb.Append("  LastName: ").Append(LastName).Append("\n");
+            sb.Append("  EmailId: ").Append(EmailId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -96,44 +91,39 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((PersonAddress)obj);
+            return obj.GetType() == GetType() && Equals((AdminDTO)obj);
         }
 
         /// <summary>
-        /// Returns true if PersonAddress instances are equal
+        /// Returns true if Admin instances are equal
         /// </summary>
-        /// <param name="other">Instance of PersonAddress to be compared</param>
+        /// <param name="other">Instance of Admin to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PersonAddress other)
+        public bool Equals(AdminDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    Street == other.Street ||
-                    Street != null &&
-                    Street.Equals(other.Street)
+                    FirstName == other.FirstName ||
+                    FirstName != null &&
+                    FirstName.Equals(other.FirstName)
                 ) && 
                 (
-                    City == other.City ||
-                    City != null &&
-                    City.Equals(other.City)
+                    MiddleName == other.MiddleName ||
+                    MiddleName != null &&
+                    MiddleName.Equals(other.MiddleName)
                 ) && 
                 (
-                    State == other.State ||
-                    State != null &&
-                    State.Equals(other.State)
+                    LastName == other.LastName ||
+                    LastName != null &&
+                    LastName.Equals(other.LastName)
                 ) && 
                 (
-                    PostalCode == other.PostalCode ||
-                    PostalCode != null &&
-                    PostalCode.Equals(other.PostalCode)
-                ) && 
-                (
-                    Country == other.Country ||
-                    Country != null &&
-                    Country.Equals(other.Country)
+                    EmailId == other.EmailId ||
+                    EmailId != null &&
+                    EmailId.Equals(other.EmailId)
                 );
         }
 
@@ -147,16 +137,14 @@ namespace MatrimonialApi.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (Street != null)
-                    hashCode = hashCode * 59 + Street.GetHashCode();
-                    if (City != null)
-                    hashCode = hashCode * 59 + City.GetHashCode();
-                    if (State != null)
-                    hashCode = hashCode * 59 + State.GetHashCode();
-                    if (PostalCode != null)
-                    hashCode = hashCode * 59 + PostalCode.GetHashCode();
-                    if (Country != null)
-                    hashCode = hashCode * 59 + Country.GetHashCode();
+                    if (FirstName != null)
+                    hashCode = hashCode * 59 + FirstName.GetHashCode();
+                    if (MiddleName != null)
+                    hashCode = hashCode * 59 + MiddleName.GetHashCode();
+                    if (LastName != null)
+                    hashCode = hashCode * 59 + LastName.GetHashCode();
+                    if (EmailId != null)
+                    hashCode = hashCode * 59 + EmailId.GetHashCode();
                 return hashCode;
             }
         }
@@ -164,12 +152,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(PersonAddress left, PersonAddress right)
+        public static bool operator ==(AdminDTO left, AdminDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(PersonAddress left, PersonAddress right)
+        public static bool operator !=(AdminDTO left, AdminDTO right)
         {
             return !Equals(left, right);
         }

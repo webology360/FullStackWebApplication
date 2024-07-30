@@ -24,21 +24,28 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class PersonContact : IEquatable<PersonContact>
+    public partial class RoleDTO : IEquatable<RoleDTO>
     { 
         /// <summary>
-        /// Gets or Sets PhoneNumber
+        /// Gets or Sets Id
         /// </summary>
 
-        [DataMember(Name="phoneNumber")]
-        public string PhoneNumber { get; set; }
+        [DataMember(Name="id")]
+        public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or Sets EmailId
+        /// Gets or Sets RoleName
         /// </summary>
 
-        [DataMember(Name="emailId")]
-        public string EmailId { get; set; }
+        [DataMember(Name="roleName")]
+        public string RoleName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets PermissionName
+        /// </summary>
+
+        [DataMember(Name="permissionName")]
+        public List<string> PermissionName { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -47,9 +54,10 @@ namespace MatrimonialApi.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class PersonContact {\n");
-            sb.Append("  PhoneNumber: ").Append(PhoneNumber).Append("\n");
-            sb.Append("  EmailId: ").Append(EmailId).Append("\n");
+            sb.Append("class Role {\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  RoleName: ").Append(RoleName).Append("\n");
+            sb.Append("  PermissionName: ").Append(PermissionName).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -72,29 +80,34 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((PersonContact)obj);
+            return obj.GetType() == GetType() && Equals((RoleDTO)obj);
         }
 
         /// <summary>
-        /// Returns true if PersonContact instances are equal
+        /// Returns true if Role instances are equal
         /// </summary>
-        /// <param name="other">Instance of PersonContact to be compared</param>
+        /// <param name="other">Instance of Role to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PersonContact other)
+        public bool Equals(RoleDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return 
                 (
-                    PhoneNumber == other.PhoneNumber ||
-                    PhoneNumber != null &&
-                    PhoneNumber.Equals(other.PhoneNumber)
+                    Id == other.Id ||
+                    Id != null &&
+                    Id.Equals(other.Id)
                 ) && 
                 (
-                    EmailId == other.EmailId ||
-                    EmailId != null &&
-                    EmailId.Equals(other.EmailId)
+                    RoleName == other.RoleName ||
+                    RoleName != null &&
+                    RoleName.Equals(other.RoleName)
+                ) && 
+                (
+                    PermissionName == other.PermissionName ||
+                    PermissionName != null &&
+                    PermissionName.SequenceEqual(other.PermissionName)
                 );
         }
 
@@ -108,10 +121,12 @@ namespace MatrimonialApi.Models
             {
                 var hashCode = 41;
                 // Suitable nullity checks etc, of course :)
-                    if (PhoneNumber != null)
-                    hashCode = hashCode * 59 + PhoneNumber.GetHashCode();
-                    if (EmailId != null)
-                    hashCode = hashCode * 59 + EmailId.GetHashCode();
+                    if (Id != null)
+                    hashCode = hashCode * 59 + Id.GetHashCode();
+                    if (RoleName != null)
+                    hashCode = hashCode * 59 + RoleName.GetHashCode();
+                    if (PermissionName != null)
+                    hashCode = hashCode * 59 + PermissionName.GetHashCode();
                 return hashCode;
             }
         }
@@ -119,12 +134,12 @@ namespace MatrimonialApi.Models
         #region Operators
         #pragma warning disable 1591
 
-        public static bool operator ==(PersonContact left, PersonContact right)
+        public static bool operator ==(RoleDTO left, RoleDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(PersonContact left, PersonContact right)
+        public static bool operator !=(RoleDTO left, RoleDTO right)
         {
             return !Equals(left, right);
         }
