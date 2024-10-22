@@ -1,0 +1,38 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f9fa; /* Adjust as needed */
+}
+
+.navbar-logo img {
+  height: 50px; /* Adjust as needed */
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #000; /* Adjust as needed */
+  font-weight: bold;
+}
+
+.navbar-links a:hover {
+  color: #007bff; /* Adjust as needed */
+}
+
+.login-button {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.login-button:hover {
+  background-color: darkred;
+}

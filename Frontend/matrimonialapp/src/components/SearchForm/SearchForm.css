@@ -1,0 +1,20 @@
+.search-form {
+  display: flex;
+  flex-direction: row;
+  gap: 10px; /* Adjust the gap between controls as needed */
+  align-items: center; /* Align items vertically in the center */
+}
+
+.search-form select {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.search-form button {
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+  .submit-button:hover {
+    background-color: darkred;
+  }
