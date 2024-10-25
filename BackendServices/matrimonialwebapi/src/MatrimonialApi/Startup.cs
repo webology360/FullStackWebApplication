@@ -98,10 +98,10 @@ namespace MatrimonialApi
                         Contact = new OpenApiContact()
                         {
                            Name = "Swagger Codegen Contributors",
-                           Url = new Uri("https://localhost:3001/swagger-api/swagger-codegen"),
+                           Url = new Uri("https://localhost:3002/swagger-api/swagger-codegen"),
                            Email = "floatingrays@gmail.com"
                         },
-                        TermsOfService = new Uri("https://localhost:3001")
+                        TermsOfService = new Uri("https://localhost:3002")
                     });
                     c.CustomSchemaIds(type => type.FullName);
                     c.IncludeXmlComments($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml");
