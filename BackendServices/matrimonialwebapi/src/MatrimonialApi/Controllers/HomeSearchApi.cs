@@ -18,10 +18,11 @@ using MatrimonialApi.Attributes;
 using MatrimonialApi.Security;
 using Microsoft.AspNetCore.Authorization;
 using MatrimonialApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MatrimonialApi.Controllers
 { 
-    /// <summary>
+  /// <summary>
     /// 
     /// </summary>
     [ApiController]
@@ -32,7 +33,6 @@ namespace MatrimonialApi.Controllers
         /// </summary>
         /// <remarks>Search on home page</remarks>
         /// <param name="body">Search Query</param>
-        /// <param name="xRequestAuth">Authorization token value</param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
@@ -44,7 +44,7 @@ namespace MatrimonialApi.Controllers
         [ValidateModelState]
         [SwaggerOperation("HomePageProfileSearch")]
         [SwaggerResponse(statusCode: 200, type: typeof(List<ShortProfileDTO>), description: "Successful operation")]
-        public virtual IActionResult HomePageProfileSearch([FromBody] HomeSearch body, [FromHeader][Required()] string xRequestAuth)
+        public virtual IActionResult HomePageProfileSearch([FromBody] HomeSearch body)
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(List<ShortProfile>));

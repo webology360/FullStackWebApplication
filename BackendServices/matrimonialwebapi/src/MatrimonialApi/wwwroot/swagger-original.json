@@ -45,7 +45,7 @@ paths:
       summary: Get all admins
       description: Get all the admins present in the system
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: false
@@ -81,7 +81,7 @@ paths:
       description: Add a admin to the system
       operationId: AddAdmin
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: false
@@ -131,7 +131,7 @@ paths:
           explode: false
           schema:
             type: string
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: true
@@ -171,7 +171,7 @@ paths:
           explode: false
           schema:
             type: string
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: false
@@ -212,7 +212,7 @@ paths:
           explode: false
           schema:
             type: string
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: true
@@ -241,7 +241,7 @@ paths:
       summary: Get all roles
       description: Get all the roles
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: false
@@ -286,7 +286,7 @@ paths:
           explode: false
           schema:
             type: string
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: false
@@ -323,7 +323,7 @@ paths:
       description: Get n profiles page wise
       operationId: GetProfiles
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Autorization
           required: false
@@ -372,7 +372,7 @@ paths:
       description: Add a profile to the system
       operationId: AddProfile
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: false
@@ -422,7 +422,7 @@ paths:
           explode: false
           schema:
             type: string
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: false
@@ -464,7 +464,7 @@ paths:
           explode: false
           schema:
             type: string
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: false
@@ -511,7 +511,7 @@ paths:
           explode: false
           schema:
             type: string
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: false
@@ -545,7 +545,7 @@ paths:
       description: Get favourites for a profile
       operationId: GetFavourites
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           required: true
           style: simple
@@ -587,7 +587,7 @@ paths:
       description: Delete a favourite profile
       operationId: DeleteFavourite
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           required: true
           style: simple
@@ -632,7 +632,7 @@ paths:
       description: Add a favourite profile
       operationId: AddFavourite
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           required: true
           style: simple
@@ -676,7 +676,7 @@ paths:
       description: Get all the communication done till date
       operationId: GetCommunication
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           required: true
           style: simple
@@ -722,7 +722,7 @@ paths:
       description: Add a communication
       operationId: AddCommunication
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           required: true
           style: simple
@@ -762,7 +762,7 @@ paths:
       description: Search on home page
       operationId: HomePageProfileSearch
       parameters:
-        - name: X-Request-Auth
+        - name: Authorization
           in: header
           description: Authorization token value
           required: true

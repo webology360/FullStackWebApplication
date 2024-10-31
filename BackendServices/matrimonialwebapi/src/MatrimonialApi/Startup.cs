@@ -33,6 +33,10 @@ using MatrimonialApi.Interface;
 using MatrimonialApi.Repository;
 using Microsoft.Extensions.Options;
 using MatrimonialApi.Utilities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace MatrimonialApi
 {
@@ -62,6 +66,9 @@ namespace MatrimonialApi
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            var key = Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]);
+
+
             // Add framework services.
             services
                 .AddMvc(options =>
@@ -75,13 +82,29 @@ namespace MatrimonialApi
                     opts.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
                 })
                 .AddXmlSerializerFormatters();
-                
+
 
             services.AddAuthentication(BasicAuthenticationHandler.SchemeName)
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(BasicAuthenticationHandler.SchemeName, null);
 
-            services.AddAuthentication(BearerAuthenticationHandler.SchemeName)
-                .AddScheme<AuthenticationSchemeOptions, BearerAuthenticationHandler>(BearerAuthenticationHandler.SchemeName, null);
+            //services.AddAuthentication(BearerAuthenticationHandler.SchemeName)
+            //    .AddScheme<AuthenticationSchemeOptions, BearerAuthenticationHandler>(BearerAuthenticationHandler.SchemeName, null);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+               {
+                   x.RequireHttpsMetadata = false;
+                   x.SaveToken = true;
+                   x.TokenValidationParameters = new TokenValidationParameters
+                   {
+                       ValidateIssuerSigningKey = true,
+                       IssuerSigningKey = new SymmetricSecurityKey(key),
+                       ValidateIssuer = false,
+                       ValidateAudience = false
+                   };
+               });
 
             services.AddAuthentication(ApiKeyAuthenticationHandler.SchemeName)
                 .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationHandler.SchemeName, null);
@@ -97,9 +120,9 @@ namespace MatrimonialApi
                         Description = "Matrimonial API - OpenAPI 3.0 (ASP.NET Core 7.0)",
                         Contact = new OpenApiContact()
                         {
-                           Name = "Swagger Codegen Contributors",
-                           Url = new Uri("https://localhost:3002/swagger-api/swagger-codegen"),
-                           Email = "floatingrays@gmail.com"
+                            Name = "Swagger Codegen Contributors",
+                            Url = new Uri("https://localhost:3002/swagger-api/swagger-codegen"),
+                            Email = "floatingrays@gmail.com"
                         },
                         TermsOfService = new Uri("https://localhost:3002")
                     });
@@ -130,7 +153,7 @@ namespace MatrimonialApi
             //    var settings = sp.GetRequiredService<IOptions<MongoDBSettings>>().Value;
             //    return new MongoDatabaseBase(settings.ConnectionString);
             //});
-           
+
             services.AddSingleton<IMongoDatabase>(sp =>
             {
                 var settings = sp.GetRequiredService<IOptions<MongoDBSettings>>().Value;
@@ -159,6 +182,7 @@ namespace MatrimonialApi
             // app.UseStaticFiles();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
