@@ -1,13 +1,13 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 using System;
 
 namespace MatrimonialApi.DBEntity
 {
     /// <summary>
-    /// Create Admin
+    /// Create User
     /// </summary>
-    public partial class CreateAdmin
+    public partial class User
     {
         /// <summary>
         /// Gets or sets the Id of the created admin.
@@ -59,6 +59,6 @@ namespace MatrimonialApi.DBEntity
         /// Gets or sets the password reset date and time of the admin.
         /// </summary>
         public DateTime? PasswordResetDateTime { get; set; }
-    }
 
+    }
 }

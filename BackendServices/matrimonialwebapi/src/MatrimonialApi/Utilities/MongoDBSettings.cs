@@ -1,9 +1,11 @@
-﻿namespace MatrimonialApi.Utilities
+﻿using MatrimonialApi.Interfaces.Entity;
+
+namespace MatrimonialApi.Utilities
 {
     /// <summary>
     /// Represents the settings for MongoDB connection.
     /// </summary>
-    public class MongoDBSettings
+    public class MongoDBSettings: IMongoDBSettings
     {
         /// <summary>
         /// Gets or sets the connection string for MongoDB.

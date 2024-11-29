@@ -37,6 +37,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using MatrimonialApi.Interfaces.Entity;
 
 namespace MatrimonialApi
 {
@@ -84,8 +85,8 @@ namespace MatrimonialApi
                 .AddXmlSerializerFormatters();
 
 
-            services.AddAuthentication(BasicAuthenticationHandler.SchemeName)
-                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(BasicAuthenticationHandler.SchemeName, null);
+            //services.AddAuthentication(BasicAuthenticationHandler.SchemeName)
+            //    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(BasicAuthenticationHandler.SchemeName, null);
 
             //services.AddAuthentication(BearerAuthenticationHandler.SchemeName)
             //    .AddScheme<AuthenticationSchemeOptions, BearerAuthenticationHandler>(BearerAuthenticationHandler.SchemeName, null);
@@ -105,6 +106,11 @@ namespace MatrimonialApi
                        ValidateAudience = false
                    };
                });
+            services.AddAuthorization(options => {
+                options.AddPolicy("SuperAdminOnly", policy => policy.RequireRole("SuperAdmin"));
+
+
+            });
 
             services.AddAuthentication(ApiKeyAuthenticationHandler.SchemeName)
                 .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationHandler.SchemeName, null);
@@ -137,35 +143,35 @@ namespace MatrimonialApi
                 });
             // Register AutoMapper
             services.AddAutoMapper(typeof(Startup));
-
             // Configure MongoDB settings
             services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDB"));
 
+        
             // Register MongoDB client and database
-            //services.AddSingleton<IMongoClient, MongoClient>(sp =>
-            //{
-            //    var settings = sp.GetRequiredService<IOptions<MongoDBSettings>>().Value;
-            //    return new MongoClient(settings.ConnectionString);
-            //});
 
-            //services.AddSingleton<IMongoDatabase, MongoDatabaseBase>(sp =>
-            //{
-            //    var settings = sp.GetRequiredService<IOptions<MongoDBSettings>>().Value;
-            //    return new MongoDatabaseBase(settings.ConnectionString);
-            //});
+            services.AddSingleton<IMongoClient, MongoClient>(sp =>
+            {
+                var settings = sp.GetRequiredService<IOptions<MongoDBSettings>>().Value;
+                return new MongoClient(settings.ConnectionString);
+            });
 
             services.AddSingleton<IMongoDatabase>(sp =>
             {
                 var settings = sp.GetRequiredService<IOptions<MongoDBSettings>>().Value;
-                var client = new MongoClient(settings.ConnectionString);
+                var client = sp.GetRequiredService<IMongoClient>();
                 return client.GetDatabase(settings.DatabaseName);
             });
+
+            services.AddSingleton<IMongoDBSettings>(sp =>
+            sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
 
             //•	Scoped is generally preferred for both controllers and repositories in web applications, particularly when dealing with shared resources like databases or when you need to maintain consistency and share data within the scope of a single request.
             //•	Transient can be used when the services are stateless, lightweight, and you want a new instance every time the service is requested.This might be less common for repositories but could be suitable for certain stateless services used by controllers.
 
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IAdminService, AdminService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         /// <summary>

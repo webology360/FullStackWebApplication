@@ -1,0 +1,84 @@
+﻿using AutoMapper;
+using MatrimonialApi.Interface;
+using MatrimonialApi.Models;
+using MatrimonialApi.DBEntity;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+/// <summary>
+/// Service for managing Users.
+/// </summary>
+public class UserService : IUserService
+{
+    private readonly IUserRepository _UserRepository; // Assuming an User repository interface
+    private readonly IMapper _mapper;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserService"/> class.
+    /// </summary>
+    /// <param name="UserRepository">The User repository.</param>
+    /// <param name="mapper">The mapper.</param>
+    public UserService(IUserRepository UserRepository, IMapper mapper)
+    {
+        _UserRepository = UserRepository;
+        _mapper = mapper;
+    }
+
+    /// <summary>
+    /// Adds an User asynchronously.
+    /// </summary>
+    /// <param name="User">The User to add.</param>
+    /// <returns>The added User.</returns>
+    public async Task<UserDTO> AddUserAsync(UserDTO User)
+    {
+        // Implement the logic to add an User
+        var UserEntity = _mapper.Map<User>(User);
+        var addedUser = await _UserRepository.AddUserAsync(UserEntity);
+        var UserDto = _mapper.Map<UserDTO>(addedUser);
+        return UserDto;
+
+    }
+
+    /// <summary>
+    /// Retrieves all Users asynchronously.
+    /// </summary>
+    /// <returns>A collection of all Users.</returns>
+    public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
+    {
+        // Implement the logic to retrieve all Users
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Retrieves a specific User by ID asynchronously.
+    /// </summary>
+    /// <param name="UserId">The ID of the User to retrieve.</param>
+    /// <returns>The User with the specified ID.</returns>
+    public async Task<UserDTO> GetUserByIdAsync(string UserId)
+    {
+        // Implement the logic to retrieve a specific User by ID
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Updates an User asynchronously.
+    /// </summary>
+    /// <param name="UserId">The ID of the User to update.</param>
+    /// <param name="User">The updated User.</param>
+    public async Task UpdateUserAsync(string UserId, UserDTO User)
+    {
+        // Implement the logic to update an User
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Deletes an User asynchronously.
+    /// </summary>
+    /// <param name="UserId">The ID of the User to delete.</param>
+    public async Task DeleteUserAsync(string UserId)
+    {
+        // Implement the logic to delete an User
+        throw new NotImplementedException();
+    }
+}

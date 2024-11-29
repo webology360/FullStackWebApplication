@@ -45,7 +45,6 @@ namespace MatrimonialApi.Controllers
         /// </summary>
         /// <remarks> Add a Admin User</remarks>
         /// <param name="body"> Add a Admin User</param>
-        /// <param name="xRequestAuth"></param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
@@ -57,24 +56,33 @@ namespace MatrimonialApi.Controllers
         [ValidateModelState]
         [SwaggerOperation("AddAdmin")]
         [SwaggerResponse(statusCode: 200, type: typeof(AdminDTO), description: "Successful operation")]
-        public virtual async Task<IActionResult> AddAdmin([FromBody] AdminDTO body, [FromHeader] string xRequestAuth)
+        public virtual async Task<IActionResult> AddAdmin([FromBody] AdminDTO body)
         {
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(CreateAdmin));
+            try
+            {
+                //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+                // return StatusCode(200, default(CreateAdmin));
 
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
+                //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+                // return StatusCode(400);
 
-            //TODO: Uncomment the next line to return response 422 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(422);
+                //TODO: Uncomment the next line to return response 422 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+                // return StatusCode(422);
 
-            //TODO: Uncomment the next line to return response 500 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(500);
+                //TODO: Uncomment the next line to return response 500 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+                // return StatusCode(500);
 
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
-            var result = await _adminService.AddAdminAsync(body);
-            return Ok(result);
+                //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
+                // return StatusCode(0);
+                var result = await _adminService.AddAdminAsync(body);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
 
         /// <summary>

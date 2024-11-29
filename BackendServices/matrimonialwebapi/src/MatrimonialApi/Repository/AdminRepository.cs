@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MatrimonialApi.DBEntity;
 using System.Linq;
+using System;
 
 namespace MatrimonialApi.Repository
 {
@@ -21,7 +22,7 @@ namespace MatrimonialApi.Repository
         /// <param name="database">The MongoDB database.</param>
         public AdminRepository(IMongoDatabase database)
         {
-            _admins = database.GetCollection<CreateAdmin>("Admins");
+            _admins = database.GetCollection<CreateAdmin>("Admin");
         }
 
         /// <summary>
@@ -31,6 +32,14 @@ namespace MatrimonialApi.Repository
         /// <returns>The created admin.</returns>
         public async Task<CreateAdmin> AddAdminAsync(CreateAdmin createAdmin)
         {
+            //createAdmin.AccountLocked = false;
+            //createAdmin.IsActive = true;
+            //createAdmin.IsSuperAdmin = true;
+            //createAdmin.CreatedDateTime = DateTime.UtcNow;
+            //createAdmin.PasswordResetDateTime = DateTime.UtcNow;
+            //createAdmin.
+
+
             
             await _admins.InsertOneAsync(createAdmin);
             return createAdmin;

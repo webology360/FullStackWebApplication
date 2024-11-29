@@ -67,6 +67,6 @@ namespace MatrimonialApi.Controllers
             ? JsonConvert.DeserializeObject<List<ShortProfileDTO>>(exampleJson)
             : default(List<ShortProfileDTO>);            //TODO: Change the data returned
             return new ObjectResult(example);
-        }
+           }
     }
 }
