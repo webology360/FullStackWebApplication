@@ -16,6 +16,7 @@ namespace MatrimonialApi.Repository
     {
         private readonly IMongoCollection<CreateAdmin> _admins;
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminRepository"/> class.
         /// </summary>
@@ -23,6 +24,7 @@ namespace MatrimonialApi.Repository
         public AdminRepository(IMongoDatabase database)
         {
             _admins = database.GetCollection<CreateAdmin>("Admin");
+
         }
 
         /// <summary>

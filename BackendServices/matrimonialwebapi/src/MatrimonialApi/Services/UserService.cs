@@ -5,6 +5,8 @@ using MatrimonialApi.DBEntity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using MatrimonialApi.Utilities;
 
 /// <summary>
 /// Service for managing Users.
@@ -13,16 +15,17 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _UserRepository; // Assuming an User repository interface
     private readonly IMapper _mapper;
-
+    private readonly IPasswordHasher<User> _passwordHasher;
     /// <summary>
     /// Initializes a new instance of the <see cref="UserService"/> class.
     /// </summary>
     /// <param name="UserRepository">The User repository.</param>
     /// <param name="mapper">The mapper.</param>
-    public UserService(IUserRepository UserRepository, IMapper mapper)
+    public UserService(IUserRepository UserRepository, IMapper mapper, IPasswordHasher<User> passwordHasher)
     {
         _UserRepository = UserRepository;
         _mapper = mapper;
+        _passwordHasher = passwordHasher;
     }
 
     /// <summary>
@@ -34,6 +37,8 @@ public class UserService : IUserService
     {
         // Implement the logic to add an User
         var UserEntity = _mapper.Map<User>(User);
+        var firstTimePassword=RandomStringGenerator.GenerateRandomString();
+        UserEntity.Password = _passwordHasher.HashPassword(UserEntity, firstTimePassword);
         var addedUser = await _UserRepository.AddUserAsync(UserEntity);
         var UserDto = _mapper.Map<UserDTO>(addedUser);
         return UserDto;

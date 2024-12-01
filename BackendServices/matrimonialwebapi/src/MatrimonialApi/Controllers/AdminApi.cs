@@ -55,8 +55,8 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
         [ValidateModelState]
         [SwaggerOperation("AddAdmin")]
-        [SwaggerResponse(statusCode: 200, type: typeof(AdminDTO), description: "Successful operation")]
-        public virtual async Task<IActionResult> AddAdmin([FromBody] AdminDTO body)
+        [SwaggerResponse(statusCode: 200, type: typeof(UserDTO), description: "Successful operation")]
+        public virtual async Task<IActionResult> AddAdmin([FromBody] UserDTO body)
         {
             try
             {
@@ -210,7 +210,7 @@ namespace MatrimonialApi.Controllers
         [Route("/api/admin/{adminId}")]
         [ValidateModelState]
         [SwaggerOperation("UpdateAdmin")]
-        public virtual async Task<IActionResult> UpdateAdmin([FromBody] AdminDTO body, [FromRoute][Required] string adminId, [FromHeader] string xRequestAuth)
+        public virtual async Task<IActionResult> UpdateAdmin([FromBody] UserDTO body, [FromRoute][Required] string adminId, [FromHeader] string xRequestAuth)
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200);

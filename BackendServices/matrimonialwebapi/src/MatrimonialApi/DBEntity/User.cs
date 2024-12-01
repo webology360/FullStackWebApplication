@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MatrimonialApi.DBEntity
 {
@@ -54,6 +55,12 @@ namespace MatrimonialApi.DBEntity
         /// Gets or sets a value indicating whether the admin account is locked.
         /// </summary>
         public bool? AccountLocked { get; set; }
+
+        /// <summary>
+        /// Gets or sets the password of the admin.
+        /// </summary>
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
 
         /// <summary>
         /// Gets or sets the password reset date and time of the admin.

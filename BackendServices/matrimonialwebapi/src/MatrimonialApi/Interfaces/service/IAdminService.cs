@@ -15,7 +15,7 @@ namespace MatrimonialApi.Interface
         /// </summary>
         /// <param name="admin">The admin to add.</param>
         /// <returns>The created admin.</returns>
-        Task<AdminDTO> AddAdminAsync(AdminDTO admin);
+        Task<UserDTO> AddAdminAsync(UserDTO admin);
 
         /// <summary>
         /// Gets all admins asynchronously.
