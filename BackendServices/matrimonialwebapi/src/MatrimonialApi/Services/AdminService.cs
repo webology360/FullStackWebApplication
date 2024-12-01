@@ -12,18 +12,19 @@ using System.Threading.Tasks;
 public class AdminService : IAdminService
 {
     private readonly IAdminRepository _adminRepository; // Assuming an admin repository interface
-    private readonly IUserRepository _userRepository;
+    private readonly IUserService _userService;
     private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AdminService"/> class.
     /// </summary>
     /// <param name="adminRepository">The admin repository.</param>
+    /// <param name="userService">The user service.</param>
     /// <param name="mapper">The mapper.</param>
-    public AdminService(IAdminRepository adminRepository,IUserRepository userRepository, IMapper mapper)
+    public AdminService(IAdminRepository adminRepository, IUserService userService, IMapper mapper)
     {
         _adminRepository = adminRepository;
-        _userRepository = userRepository;
+        _userService = userService;
         _mapper = mapper;
     }
 
@@ -36,10 +37,9 @@ public class AdminService : IAdminService
     {
         // Implement the logic to add an admin
         var adminEntity = _mapper.Map<User>(admin);
-        var addedAdmin = await _userRepository.AddUserAsync(adminEntity);
-        var userDto=_mapper.Map<UserDTO>(addedAdmin);
+        var addedAdmin = await _userService.AddUserAsync(admin);
+        var userDto = _mapper.Map<UserDTO>(addedAdmin);
         return userDto;
-
     }
 
     /// <summary>

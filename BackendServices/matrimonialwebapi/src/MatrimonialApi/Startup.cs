@@ -68,8 +68,6 @@ namespace MatrimonialApi
         public void ConfigureServices(IServiceCollection services)
         {
             var key = Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]);
-
-
             // Add framework services.
             services
                 .AddMvc(options =>
@@ -84,12 +82,7 @@ namespace MatrimonialApi
                 })
                 .AddXmlSerializerFormatters();
 
-
-            //services.AddAuthentication(BasicAuthenticationHandler.SchemeName)
-            //    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(BasicAuthenticationHandler.SchemeName, null);
-
-            //services.AddAuthentication(BearerAuthenticationHandler.SchemeName)
-            //    .AddScheme<AuthenticationSchemeOptions, BearerAuthenticationHandler>(BearerAuthenticationHandler.SchemeName, null);
+            //User token validation and authentication
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -102,8 +95,11 @@ namespace MatrimonialApi
                    {
                        ValidateIssuerSigningKey = true,
                        IssuerSigningKey = new SymmetricSecurityKey(key),
-                       ValidateIssuer = false,
-                       ValidateAudience = false
+                       ValidateIssuer = true,
+                       ValidateAudience = true,
+                       ValidateLifetime = true,
+                       ValidIssuer= Configuration["Jwt:Issuer"],
+                       ValidAudience= Configuration["Jwt:Audience"]
                    };
                });
             services.AddAuthorization(options => {

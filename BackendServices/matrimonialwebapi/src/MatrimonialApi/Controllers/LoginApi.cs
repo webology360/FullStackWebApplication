@@ -7,6 +7,9 @@ using MatrimonialApi.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using MatrimonialApi.Utilities;
+using MatrimonialApi.Enum;
+using Microsoft.OpenApi.Extensions;
 
 namespace MatrimonialApi.Controllers
 {
@@ -37,21 +40,8 @@ namespace MatrimonialApi.Controllers
         public IActionResult Login([FromBody] LoginDTO login)
         {
             // Validate the user credentials (this is just a demo, so we'll skip this step)
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                            new Claim(ClaimTypes.Name, login.Username)
-                }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
+            TokenService tokenService  = new TokenService(_configuration);
+            var tokenString = tokenService.GenerateToken(login.Username, UserRole.SuperAdmin.GetDisplayName());
             return Ok(new { Token = tokenString });
         }
     }
