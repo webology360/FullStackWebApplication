@@ -38,6 +38,8 @@ using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MatrimonialApi.Interfaces.Entity;
+using MatrimonialApi.DBEntity;
+using Microsoft.AspNetCore.Identity;
 
 namespace MatrimonialApi
 {
@@ -99,7 +101,8 @@ namespace MatrimonialApi
                        ValidateAudience = true,
                        ValidateLifetime = true,
                        ValidIssuer= Configuration["Jwt:Issuer"],
-                       ValidAudience= Configuration["Jwt:Audience"]
+                       ValidAudience= Configuration["Jwt:Audience"],
+                       //ClockSkew= TimeSpan.Zero
                    };
                });
             services.AddAuthorization(options => {
@@ -168,6 +171,8 @@ namespace MatrimonialApi
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
         }
 
         /// <summary>
