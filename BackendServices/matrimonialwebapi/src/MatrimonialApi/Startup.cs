@@ -23,7 +23,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using MatrimonialApi.Filters;
 using MatrimonialApi.Security;
-using Amazon.Runtime.Internal;
+//using Amazon.Runtime.Internal;
 using MongoDB.Driver;
 using SharpCompress.Common;
 using static System.Net.Mime.MediaTypeNames;
@@ -40,6 +40,11 @@ using System.Text;
 using MatrimonialApi.Interfaces.Entity;
 using MatrimonialApi.DBEntity;
 using Microsoft.AspNetCore.Identity;
+using AspNetCore.Identity.Mongo;
+using AspNetCore.Identity.Mongo.Model;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson.Serialization;
 
 namespace MatrimonialApi
 {
@@ -69,89 +74,107 @@ namespace MatrimonialApi
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            var key = Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]);
-            // Add framework services.
-            services
-                .AddMvc(options =>
-                {
-                    options.InputFormatters.RemoveType<Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter>();
-                    options.OutputFormatters.RemoveType<Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter>();
-                })
-                .AddNewtonsoftJson(opts =>
-                {
-                    opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    opts.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
-                })
-                .AddXmlSerializerFormatters();
+            // Set the global GuidRepresentation mode
+            BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 
-            //User token validation and authentication
+            services.AddIdentity<User, Role>()
+                .AddMongoDbStores<User, Role, Guid>(options =>
+                {
+                    options.ConnectionString = Configuration.GetConnectionString("MongoDbConnection");
+                })
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+            services.AddMvc(options =>
+            {
+                options.InputFormatters.RemoveType<Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter>();
+                options.OutputFormatters.RemoveType<Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter>();
+            })
+            .AddNewtonsoftJson(opts =>
+            {
+                opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                opts.SerializerSettings.Converters.Add(new StringEnumConverter(new CamelCaseNamingStrategy()));
+            })
+            .AddXmlSerializerFormatters();
+
+            // User token validation and authentication
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
-               {
-                   x.RequireHttpsMetadata = false;
-                   x.SaveToken = true;
-                   x.TokenValidationParameters = new TokenValidationParameters
-                   {
-                       ValidateIssuerSigningKey = true,
-                       IssuerSigningKey = new SymmetricSecurityKey(key),
-                       ValidateIssuer = true,
-                       ValidateAudience = true,
-                       ValidateLifetime = true,
-                       ValidIssuer= Configuration["Jwt:Issuer"],
-                       ValidAudience= Configuration["Jwt:Audience"],
-                       //ClockSkew= TimeSpan.Zero
-                   };
-               });
-            services.AddAuthorization(options => {
-                options.AddPolicy("SuperAdminOnly", policy => policy.RequireRole("SuperAdmin"));
-
-
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:Key"])),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    ClockSkew = TimeSpan.Zero
+                };
             });
 
             services.AddAuthentication(ApiKeyAuthenticationHandler.SchemeName)
                 .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(ApiKeyAuthenticationHandler.SchemeName, null);
 
-
-            services
-                .AddSwaggerGen(c =>
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("1.0.11", new OpenApiInfo
                 {
-                    c.SwaggerDoc("1.0.11", new OpenApiInfo
+                    Version = "1.0.11",
+                    Title = "Matrimonial API - OpenAPI 3.0",
+                    Description = "Matrimonial API - OpenAPI 3.0 (ASP.NET Core 7.0)",
+                    Contact = new OpenApiContact()
                     {
-                        Version = "1.0.11",
-                        Title = "Matrimonial API - OpenAPI 3.0",
-                        Description = "Matrimonial API - OpenAPI 3.0 (ASP.NET Core 7.0)",
-                        Contact = new OpenApiContact()
-                        {
-                            Name = "Swagger Codegen Contributors",
-                            Url = new Uri("https://localhost:3002/swagger-api/swagger-codegen"),
-                            Email = "floatingrays@gmail.com"
-                        },
-                        TermsOfService = new Uri("https://localhost:3002")
-                    });
-                    c.CustomSchemaIds(type => type.FullName);
-                    c.IncludeXmlComments($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml");
-                    // Sets the basePath property in the Swagger document generated
-                    c.DocumentFilter<BasePathFilter>("/api");
-
-                    // Include DataAnnotation attributes on Controller Action parameters as Swagger validation rules (e.g required, pattern, ..)
-                    // Use [ValidateModelState] on Actions to actually validate it in C# as well!
-                    c.OperationFilter<GeneratePathParamsValidationFilter>();
+                        Name = "Swagger Codegen Contributors",
+                        Url = new Uri("https://localhost:3002/swagger-api/swagger-codegen"),
+                        Email = "floatingrays@gmail.com"
+                    },
+                    TermsOfService = new Uri("https://localhost:3002")
                 });
+                c.CustomSchemaIds(type => type.FullName);
+                c.IncludeXmlComments($"{AppContext.BaseDirectory}{Path.DirectorySeparatorChar}{_hostingEnv.ApplicationName}.xml");
+                // Sets the basePath property in the Swagger document generated
+                c.DocumentFilter<BasePathFilter>("/api");
+
+                // Include DataAnnotation attributes on Controller Action parameters as Swagger validation rules (e.g required, pattern, ..)
+                // Use [ValidateModelState] on Actions to actually validate it in C# as well!
+                c.OperationFilter<GeneratePathParamsValidationFilter>();
+            });
+
             // Register AutoMapper
             services.AddAutoMapper(typeof(Startup));
+
             // Configure MongoDB settings
-            services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDB"));
+            services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDbConfig"));
 
-        
             // Register MongoDB client and database
-
             services.AddSingleton<IMongoClient, MongoClient>(sp =>
             {
-                var settings = sp.GetRequiredService<IOptions<MongoDBSettings>>().Value;
-                return new MongoClient(settings.ConnectionString);
+                var settings = sp.GetRequiredService<IOptions<MongoClientSettings>>().Value;
+                return new MongoClient(settings);
             });
 
             services.AddSingleton<IMongoDatabase>(sp =>
@@ -162,17 +185,15 @@ namespace MatrimonialApi
             });
 
             services.AddSingleton<IMongoDBSettings>(sp =>
-            sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
+                sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
 
-            //•	Scoped is generally preferred for both controllers and repositories in web applications, particularly when dealing with shared resources like databases or when you need to maintain consistency and share data within the scope of a single request.
-            //•	Transient can be used when the services are stateless, lightweight, and you want a new instance every time the service is requested.This might be less common for repositories but could be suitable for certain stateless services used by controllers.
-
+            // Scoped is generally preferred for both controllers and repositories in web applications, particularly when dealing with shared resources like databases or when you need to maintain consistency and share data within the scope of a single request.
+            // Transient can be used when the services are stateless, lightweight, and you want a new instance every time the service is requested. This might be less common for repositories but could be suitable for certain stateless services used by controllers.
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-
         }
 
         /// <summary>
@@ -181,7 +202,9 @@ namespace MatrimonialApi
         /// <param name="app"></param>
         /// <param name="env"></param>
         /// <param name="loggerFactory"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        /// <param name="serviceProvider"></param>
+        /// <param name="userManager"></param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider, UserManager<User> userManager)
         {
             app.UseRouting();
 
@@ -208,6 +231,8 @@ namespace MatrimonialApi
             {
                 endpoints.MapControllers();
             });
+
+            DbInitializer.Initialize(serviceProvider, userManager).Wait();
 
             if (env.IsDevelopment())
             {

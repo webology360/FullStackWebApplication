@@ -2,20 +2,21 @@
 using MongoDB.Bson;
 using System;
 using System.ComponentModel.DataAnnotations;
+using AspNetCore.Identity.Mongo.Model;
 
 namespace MatrimonialApi.DBEntity
 {
     /// <summary>
     /// Create User
     /// </summary>
-    public partial class User
+    public partial class User: MongoUser<Guid>
     {
-        /// <summary>
-        /// Gets or sets the Id of the created admin.
-        /// </summary>
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        ///// <summary>
+        ///// Gets or sets the Id of the created admin.
+        ///// </summary>
+        //[BsonId]
+        //[BsonRepresentation(BsonType.ObjectId)]
+        //public string Id { get; set; }
         /// <summary>
         /// Gets or sets the first name of the created admin.
         /// </summary>
@@ -39,22 +40,22 @@ namespace MatrimonialApi.DBEntity
         /// <summary>
         /// Gets or sets a value indicating whether the created admin is active.
         /// </summary>
-        public bool? IsActive { get; set; }
+        public bool? IsActive { get; set; }=false;
 
         /// <summary>
         /// Gets or sets a value indicating whether the created admin is a super admin.
         /// </summary>
-        public bool? IsSuperAdmin { get; set; }
+        public bool? IsSuperAdmin { get; set; }=false;
 
         /// <summary>
         /// Gets or sets the created date and time of the admin.
         /// </summary>
-        public DateTime? CreatedDateTime { get; set; }
+        public DateTime? CreatedDateTime { get; set; }= DateTime.UtcNow;
 
         /// <summary>
         /// Gets or sets a value indicating whether the admin account is locked.
         /// </summary>
-        public bool? AccountLocked { get; set; }
+        public bool? AccountLocked { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the password of the admin.
@@ -65,7 +66,7 @@ namespace MatrimonialApi.DBEntity
         /// <summary>
         /// Gets or sets the password reset date and time of the admin.
         /// </summary>
-        public DateTime? PasswordResetDateTime { get; set; }
+        public DateTime? PasswordResetDateTime { get; set; } = DateTime.UtcNow;
 
     }
 }

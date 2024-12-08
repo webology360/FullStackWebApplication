@@ -39,7 +39,8 @@ public class UserService : IUserService
     {
         // Implement the logic to add an User
         var UserEntity = _mapper.Map<User>(User);
-        var firstTimePassword = RandomStringGenerator.GenerateRandomString();
+        //var firstTimePassword = RandomStringGenerator.GenerateRandomString();
+        var firstTimePassword = "Welcome@123";
         UserEntity.Password = _passwordHasher.HashPassword(UserEntity, firstTimePassword);
         var addedUser = await _UserRepository.AddUserAsync(UserEntity);
         var UserDto = _mapper.Map<UserDTO>(addedUser);

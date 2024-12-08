@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Amazon.Auth.AccessControlPolicy;
+//using Amazon.Auth.AccessControlPolicy;
 using MatrimonialApi.DBEntity;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Configuration;
