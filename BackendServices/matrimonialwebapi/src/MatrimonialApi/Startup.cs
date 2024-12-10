@@ -194,6 +194,9 @@ namespace MatrimonialApi
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<UserManager<User>>();
+            services.AddScoped<SignInManager<User>>();
+
         }
 
         /// <summary>

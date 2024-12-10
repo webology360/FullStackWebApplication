@@ -47,31 +47,31 @@ namespace MatrimonialApi.Repository
         /// <summary>
         /// Gets a user by ID asynchronously.
         /// </summary>
-        /// <param name="emailId">The ID of the user.</param>
+        /// <param name="UserName">The ID of the user.</param>
         /// <returns>The user with the specified ID.</returns>
-        public async Task<User> GetUserByIdAsync(string emailId)
+        public async Task<User> GetUserByIdAsync(string UserName)
         {
-            var user = await _users.Find(u => u.EmailId == emailId).FirstOrDefaultAsync();
+            var user = await _users.Find(u => u.UserName == UserName).FirstOrDefaultAsync();
             return user;
         }
 
         /// <summary>
         /// Updates a user asynchronously.
         /// </summary>
-        /// <param name="emailId">The ID of the user to update.</param>
+        /// <param name="UserName">The ID of the user to update.</param>
         /// <param name="user">The updated user.</param>
-        public async Task UpdateUserAsync(string emailId, User user)
+        public async Task UpdateUserAsync(string UserName, User user)
         {
-            await _users.ReplaceOneAsync(u => u.EmailId == emailId, user);
+            await _users.ReplaceOneAsync(u => u.UserName == UserName, user);
         }
 
         /// <summary>
         /// Deletes a user asynchronously.
         /// </summary>
-        /// <param name="emailId">The ID of the user to delete.</param>
-        public async Task DeleteUserAsync(string emailId)
+        /// <param name="UserName">The ID of the user to delete.</param>
+        public async Task DeleteUserAsync(string UserName)
         {
-            await _users.DeleteOneAsync(u => u.EmailId == emailId);
+            await _users.DeleteOneAsync(u => u.UserName == UserName);
         }
     }
 }

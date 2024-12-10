@@ -33,11 +33,6 @@ namespace MatrimonialApi.DBEntity
         public string LastName { get; set; }
 
         /// <summary>
-        /// Gets or sets the email ID of the created admin.
-        /// </summary>
-        public string EmailId { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the created admin is active.
         /// </summary>
         public bool? IsActive { get; set; }=false;
@@ -56,12 +51,6 @@ namespace MatrimonialApi.DBEntity
         /// Gets or sets a value indicating whether the admin account is locked.
         /// </summary>
         public bool? AccountLocked { get; set; } = false;
-
-        /// <summary>
-        /// Gets or sets the password of the admin.
-        /// </summary>
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
 
         /// <summary>
         /// Gets or sets the password reset date and time of the admin.

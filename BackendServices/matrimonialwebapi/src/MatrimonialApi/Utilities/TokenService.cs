@@ -44,16 +44,20 @@ namespace MatrimonialApi.Utilities
             {
                     new Claim(JwtRegisteredClaimNames.Sub, userName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim("role", userRole) // Add a new claim for user role
+                    new Claim("role", userRole), // Add a new claim for user role
+                    new Claim("name", "NeedToBeAdded"),
+                    new Claim("email", "NeedToBeAdded"),
+                    new Claim("department", "NeedToBeAdded")
                 };
-
+            
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30), // Set the expiration time
-                signingCredentials: credentials);
-
+                signingCredentials: credentials
+                );
+           
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }

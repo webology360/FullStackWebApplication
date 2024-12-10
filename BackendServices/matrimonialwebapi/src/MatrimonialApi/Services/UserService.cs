@@ -40,8 +40,8 @@ public class UserService : IUserService
         // Implement the logic to add an User
         var UserEntity = _mapper.Map<User>(User);
         //var firstTimePassword = RandomStringGenerator.GenerateRandomString();
-        var firstTimePassword = "Welcome@123";
-        UserEntity.Password = _passwordHasher.HashPassword(UserEntity, firstTimePassword);
+        //var firstTimePassword = "Welcome@123";
+        //UserEntity.Password = _passwordHasher.HashPassword(UserEntity, firstTimePassword);
         var addedUser = await _UserRepository.AddUserAsync(UserEntity);
         var UserDto = _mapper.Map<UserDTO>(addedUser);
         return UserDto;
@@ -55,7 +55,9 @@ public class UserService : IUserService
     public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
     {
         // Implement the logic to retrieve all Users
-        throw new NotImplementedException();
+        var users = await _UserRepository.GetAllUsersAsync();
+        var userDTOs = _mapper.Map<IEnumerable<UserDTO>>(users);
+        return userDTOs;
     }
 
     /// <summary>

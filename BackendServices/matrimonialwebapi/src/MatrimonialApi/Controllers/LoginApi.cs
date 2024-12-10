@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using MatrimonialApi.Utilities;
 using MatrimonialApi.Enum;
 using Microsoft.OpenApi.Extensions;
+using Microsoft.AspNetCore.Identity;
+using MatrimonialApi.DBEntity;
+using System.Threading.Tasks;
 
 namespace MatrimonialApi.Controllers
 {
@@ -20,14 +23,20 @@ namespace MatrimonialApi.Controllers
     [ApiController]
     public class LoginApi : ControllerBase
     {
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginApi"/> class.
         /// </summary>
+        /// <param name="userManager">The user manager.</param>
+        /// <param name="signInManager">The sign-in manager.</param>
         /// <param name="configuration">The configuration object.</param>
-        public LoginApi(IConfiguration configuration)
+        public LoginApi(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _configuration = configuration;
         }
 
@@ -37,11 +46,22 @@ namespace MatrimonialApi.Controllers
         /// <param name="login">The login model containing the user credentials.</param>
         /// <returns>The generated JWT token.</returns>
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginDTO login)
+        public async Task<IActionResult> Login([FromBody] LoginDTO login)
         {
-            // Validate the user credentials (this is just a demo, so we'll skip this step)
-            TokenService tokenService  = new TokenService(_configuration);
-            var tokenString = tokenService.GenerateToken(login.Username, UserRole.SuperAdmin.GetDisplayName());
+            var user = await _userManager.FindByNameAsync(login.Username);
+            if (user == null)
+            {
+                return BadRequest("Invalid username or password.");
+            }
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, lockoutOnFailure: false);
+            if (!result.Succeeded)
+            {
+                return BadRequest("Invalid username or password.");
+            }
+
+            var tokenService = new TokenService(_configuration);
+            var tokenString = tokenService.GenerateToken(user.UserName, UserRole.SuperAdmin.GetDisplayName());
             return Ok(new { Token = tokenString });
         }
     }
