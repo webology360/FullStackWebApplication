@@ -68,7 +68,7 @@ public class AdminService : IAdminService
     /// </summary>
     /// <param name="adminId">The ID of the admin to update.</param>
     /// <param name="admin">The updated admin.</param>
-    public async Task UpdateAdminAsync(string adminId, AdminDTO admin)
+    public async Task<UserDTO> UpdateAdminAsync(string adminId, UserDTO admin)
     {
         // Implement the logic to update an admin
         throw new NotImplementedException();

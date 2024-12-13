@@ -45,7 +45,6 @@ namespace MatrimonialApi.Utilities
                     new Claim(JwtRegisteredClaimNames.Sub, userName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim("role", userRole), // Add a new claim for user role
-                    new Claim("name", "NeedToBeAdded"),
                     new Claim("email", "NeedToBeAdded"),
                     new Claim("department", "NeedToBeAdded")
                 };

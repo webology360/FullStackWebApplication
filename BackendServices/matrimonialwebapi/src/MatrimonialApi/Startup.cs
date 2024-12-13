@@ -167,14 +167,19 @@ namespace MatrimonialApi
             // Register AutoMapper
             services.AddAutoMapper(typeof(Startup));
 
+           
+            services.AddSingleton<IMongoDBSettings>(sp =>
+               sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
+
             // Configure MongoDB settings
             services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDbConfig"));
+
 
             // Register MongoDB client and database
             services.AddSingleton<IMongoClient, MongoClient>(sp =>
             {
-                var settings = sp.GetRequiredService<IOptions<MongoClientSettings>>().Value;
-                return new MongoClient(settings);
+                var settings = sp.GetRequiredService<IOptions<MongoDBSettings>>().Value;
+                return new MongoClient(settings.ConnectionString);
             });
 
             services.AddSingleton<IMongoDatabase>(sp =>
@@ -184,8 +189,7 @@ namespace MatrimonialApi
                 return client.GetDatabase(settings.DatabaseName);
             });
 
-            services.AddSingleton<IMongoDBSettings>(sp =>
-                sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
+
 
             // Scoped is generally preferred for both controllers and repositories in web applications, particularly when dealing with shared resources like databases or when you need to maintain consistency and share data within the scope of a single request.
             // Transient can be used when the services are stateless, lightweight, and you want a new instance every time the service is requested. This might be less common for repositories but could be suitable for certain stateless services used by controllers.

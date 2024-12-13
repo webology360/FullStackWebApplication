@@ -52,7 +52,7 @@ namespace MatrimonialApi.Controllers
         /// <response code="0">Default error</response>
         [HttpPost]
         [Route("/api/admin")]
-        [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
+        [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName,Roles = "superadmin")]
         [ValidateModelState]
         [SwaggerOperation("AddAdmin")]
         [SwaggerResponse(statusCode: 200, type: typeof(UserDTO), description: "Successful operation")]
@@ -97,11 +97,11 @@ namespace MatrimonialApi.Controllers
         /// <response code="0">Default error</response>
         [HttpGet]
         [Route("/api/admin")]
-        [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
+        [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
         [SwaggerOperation("AdminGet")]
         [SwaggerResponse(statusCode: 200, type: typeof(List<AdminDTO>), description: "Successful operation")]
-        public virtual async Task<IActionResult> AdminGet([FromHeader] string xRequestAuth)
+        public virtual async Task<IActionResult> AdminGet()
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(List<CreateAdmin>));
@@ -134,9 +134,10 @@ namespace MatrimonialApi.Controllers
         /// <response code="0">Default error</response>
         [HttpDelete]
         [Route("/api/admin/{adminId}")]
+        [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
         [SwaggerOperation("DeleteAdmin")]
-        public virtual async Task<IActionResult> DeleteAdmin([FromRoute][Required] string adminId, [FromHeader][Required()] string xRequestAuth)
+        public virtual async Task<IActionResult> DeleteAdmin([FromRoute][Required] string adminId)
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200);
@@ -171,11 +172,11 @@ namespace MatrimonialApi.Controllers
         /// <response code="0">Default error</response>
         [HttpGet]
         [Route("/api/admin/{adminId}")]
-        [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName)]
+        [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
         [SwaggerOperation("GetAdmin")]
         [SwaggerResponse(statusCode: 200, type: typeof(AdminDTO), description: "Successful operation")]
-        public virtual async Task<IActionResult> GetAdmin([FromRoute][Required] string adminId, [FromHeader][Required()] string xRequestAuth)
+        public virtual async Task<IActionResult> GetAdmin([FromRoute][Required] string adminId)
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(CreateAdmin));
@@ -199,8 +200,8 @@ namespace MatrimonialApi.Controllers
         /// Update a admin user
         /// </summary>
         /// <remarks>Update a admin user</remarks>
-        /// <param name="xRequestAuth"></param>
         /// <param name="body">Update a admin</param>
+        /// <param name="adminId">The ID of the admin user</param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
@@ -208,9 +209,11 @@ namespace MatrimonialApi.Controllers
         /// <response code="0">Default error</response>
         [HttpPut]
         [Route("/api/admin/{adminId}")]
+        [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
         [SwaggerOperation("UpdateAdmin")]
-        public virtual async Task<IActionResult> UpdateAdmin([FromBody] UserDTO body, [FromRoute][Required] string adminId, [FromHeader] string xRequestAuth)
+        [SwaggerResponse(statusCode: 200, type: typeof(UserDTO), description: "Successful operation")]
+        public virtual async Task<IActionResult> UpdateAdmin([FromBody] UserDTO body, [FromRoute][Required] string adminId)
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200);
@@ -227,7 +230,7 @@ namespace MatrimonialApi.Controllers
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
 
-            var result = await _adminService.AddAdminAsync(body);
+            var result = await _adminService.UpdateAdminAsync(adminId, body);
             return Ok(result);
         }
     }

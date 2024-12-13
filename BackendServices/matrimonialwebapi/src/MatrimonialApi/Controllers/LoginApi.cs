@@ -61,7 +61,7 @@ namespace MatrimonialApi.Controllers
             }
 
             var tokenService = new TokenService(_configuration);
-            var tokenString = tokenService.GenerateToken(user.UserName, UserRole.SuperAdmin.GetDisplayName());
+            var tokenString = tokenService.GenerateToken(user.UserName, UserRole.SuperAdmin.GetDisplayName().ToLower());
             return Ok(new { Token = tokenString });
         }
     }

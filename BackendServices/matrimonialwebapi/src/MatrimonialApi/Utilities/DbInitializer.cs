@@ -19,7 +19,7 @@ public class DbInitializer
     {
         var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
 
-        string[] roleNames = { "Admin", "SuperAdmin", "MidAdmin"};
+        string[] roleNames = { "admin", "superadmin", "user"};
         IdentityResult roleResult;
 
         foreach (var roleName in roleNames)
@@ -33,8 +33,8 @@ public class DbInitializer
 
         var adminUser = new User
         {
-            UserName = "admin@webology360.com",
-            Email = "admin@webology360.com",
+            UserName = "superadmin",
+            Email = "superadmin@webology360.com",
             FirstName = "Admin",
             LastName = "Admin",
             IsActive = true,
@@ -44,14 +44,14 @@ public class DbInitializer
         };
 
         string adminPassword = "Welcome@123";
-        var user = await userManager.FindByEmailAsync("admin@webology360.com");
+        var user = await userManager.FindByEmailAsync("superadmin@webology360.com");
 
         if (user == null)
         {
             var createAdminUser = await userManager.CreateAsync(adminUser, adminPassword);
             if (createAdminUser.Succeeded)
             {
-                await userManager.AddToRoleAsync(adminUser, "Admin");
+                await userManager.AddToRoleAsync(adminUser, "superadmin");
             }
         }
     }

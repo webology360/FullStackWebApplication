@@ -35,7 +35,7 @@ namespace MatrimonialApi.Interface
         /// </summary>
         /// <param name="adminId">The ID of the admin to update.</param>
         /// <param name="admin">The updated admin.</param>
-        Task UpdateAdminAsync(string adminId, AdminDTO admin);
+        Task<UserDTO> UpdateAdminAsync(string adminId, UserDTO admin);
 
         /// <summary>
         /// Deletes an admin asynchronously.
