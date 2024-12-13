@@ -30,18 +30,8 @@ namespace MatrimonialApi.Repository
         /// <returns>The created user.</returns>
         public async Task<User> AddUserAsync(User user)
         {
-            try
-            {
                 await _users.InsertOneAsync(user);
                 return user;
-            }
-            catch (System.Exception ex)
-            {
-
-                throw ex;
-            }
-            
-           
         }
 
         /// <summary>
