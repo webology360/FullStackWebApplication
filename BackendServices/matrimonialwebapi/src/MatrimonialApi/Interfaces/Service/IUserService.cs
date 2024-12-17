@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MatrimonialApi.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace MatrimonialApi.Interface
@@ -15,7 +16,7 @@ namespace MatrimonialApi.Interface
         /// </summary>
         /// <param name="User">The User to add.</param>
         /// <returns>The created User.</returns>
-        Task<UserDTO> AddUserAsync(UserDTO User);
+        Task<IdentityResult> AddUserAsync(UserDTO User);
 
         /// <summary>
         /// Gets all Users asynchronously.
@@ -35,7 +36,7 @@ namespace MatrimonialApi.Interface
         /// </summary>
         /// <param name="UserId">The ID of the User to update.</param>
         /// <param name="User">The updated User.</param>
-        Task UpdateUserAsync(string UserId, UserDTO User);
+        Task<UserDTO> UpdateUserAsync(string UserId, UserDTO User);
 
         /// <summary>
         /// Deletes an User asynchronously.

@@ -7,44 +7,71 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using MatrimonialApi.Utilities;
+using Microsoft.Extensions.Configuration;
+using MatrimonialApi.Enum;
+using System.Net.Http;
+using System.Net;
 
 /// <summary>
 /// Service for managing Users.
 /// </summary>
 public class UserService : IUserService
 {
-    private readonly IUserRepository _UserRepository; // Assuming an User repository interface
-    private readonly IMapper _mapper;
+    //private readonly IUserRepository _UserRepository; // Assuming an User repository interface
     private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IMapper _mapper;
+    private readonly UserManager<User> _userManager;
+    private readonly IConfiguration _configuration;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserService"/> class.
     /// </summary>
-    /// <param name="UserRepository">The User repository.</param>
+    /// <param name="userManager">The User repository.</param>
     /// <param name="mapper">The mapper.</param>
     /// <param name="passwordHasher">The password hasher.</param>
-    public UserService(IUserRepository UserRepository, IMapper mapper, IPasswordHasher<User> passwordHasher)
+    /// <param name="configuration">The configuration.</param>
+    public UserService(UserManager<User> userManager, IMapper mapper, IPasswordHasher<User> passwordHasher, IConfiguration configuration)
     {
-        _UserRepository = UserRepository;
         _mapper = mapper;
+        _userManager = userManager;
         _passwordHasher = passwordHasher;
+        _configuration = configuration;
     }
 
     /// <summary>
     /// Adds an User asynchronously.
     /// </summary>
-    /// <param name="User">The User to add.</param>
+    /// <param name="user">The User to add.</param>
     /// <returns>The added User.</returns>
-    public async Task<UserDTO> AddUserAsync(UserDTO User)
+    public async Task<IdentityResult> AddUserAsync(UserDTO user)
     {
-        // Implement the logic to add an User
-        var UserEntity = _mapper.Map<User>(User);
-        //var firstTimePassword = RandomStringGenerator.GenerateRandomString();
-        //var firstTimePassword = "Welcome@123";
-        //UserEntity.Password = _passwordHasher.HashPassword(UserEntity, firstTimePassword);
-        var addedUser = await _UserRepository.AddUserAsync(UserEntity);
-        var UserDto = _mapper.Map<UserDTO>(addedUser);
-        return UserDto;
+        try
+        {
+            if(!Enum.TryParse(typeof(UserRole), user.Role.ToLower(), out var role))
+            {
+                var errorMessage = "Invalid role";
+                var statusCode = HttpStatusCode.BadRequest;
+                throw new HttpRequestException(errorMessage, null,statusCode);
+            }
+            //user.Role.ToLower()==
+            var userEntity = _mapper.Map<User>(user);
+            userEntity.UserName= user.EmailId;
+            userEntity.Email = user.EmailId;
+            //userEntity.Role = user.Role;
+            var password =_passwordHasher.HashPassword(userEntity,_configuration["DefaultUserPassword"]);
+            var addedUser = await _userManager.CreateAsync(userEntity, password);
+            if(addedUser.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(userEntity, user.Role);
+            }
+            
+            //var UserDto = _mapper.Map<UserDTO>(addedUser);
+            return addedUser;
+        }
+        catch (Exception )
+        {
+                throw ;
+        }
 
     }
 
@@ -55,9 +82,10 @@ public class UserService : IUserService
     public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
     {
         // Implement the logic to retrieve all Users
-        var users = await _UserRepository.GetAllUsersAsync();
-        var userDTOs = _mapper.Map<IEnumerable<UserDTO>>(users);
-        return userDTOs;
+        //var users = await _userManager.get;
+        //var userDTOs = _mapper.Map<IEnumerable<UserDTO>>(users);
+        //return userDTOs;
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -76,7 +104,7 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="UserId">The ID of the User to update.</param>
     /// <param name="User">The updated User.</param>
-    public async Task UpdateUserAsync(string UserId, UserDTO User)
+    public async Task<UserDTO> UpdateUserAsync(string UserId, UserDTO User)
     {
         // Implement the logic to update an User
         throw new NotImplementedException();

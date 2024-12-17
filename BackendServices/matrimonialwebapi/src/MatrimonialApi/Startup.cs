@@ -80,7 +80,7 @@ namespace MatrimonialApi
             services.AddIdentity<User, Role>()
                 .AddMongoDbStores<User, Role, Guid>(options =>
                 {
-                    options.ConnectionString = Configuration.GetConnectionString("MongoDbConnection");
+                    options.ConnectionString = Configuration["MongoDbConfig:ConnectionString"].ToString();
                 })
                 .AddDefaultTokenProviders();
 
@@ -100,6 +100,8 @@ namespace MatrimonialApi
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
+                //options.ClaimsIdentity.RoleClaimType = "Pagal";
+                options.ClaimsIdentity.UserIdClaimType = "Id";
             });
 
             services.AddMvc(options =>
@@ -193,8 +195,8 @@ namespace MatrimonialApi
 
             // Scoped is generally preferred for both controllers and repositories in web applications, particularly when dealing with shared resources like databases or when you need to maintain consistency and share data within the scope of a single request.
             // Transient can be used when the services are stateless, lightweight, and you want a new instance every time the service is requested. This might be less common for repositories but could be suitable for certain stateless services used by controllers.
-            services.AddScoped<IAdminRepository, AdminRepository>();
-            services.AddScoped<IAdminService, AdminService>();
+            //services.AddScoped<IAdminRepository, AdminRepository>();
+            //services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();

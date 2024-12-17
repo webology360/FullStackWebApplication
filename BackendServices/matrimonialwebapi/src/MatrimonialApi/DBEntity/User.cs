@@ -3,6 +3,7 @@ using MongoDB.Bson;
 using System;
 using System.ComponentModel.DataAnnotations;
 using AspNetCore.Identity.Mongo.Model;
+using System.Runtime.Serialization;
 
 namespace MatrimonialApi.DBEntity
 {
@@ -56,6 +57,8 @@ namespace MatrimonialApi.DBEntity
         /// Gets or sets the password reset date and time of the admin.
         /// </summary>
         public DateTime? PasswordResetDateTime { get; set; } = DateTime.UtcNow;
+
+    
 
     }
 }

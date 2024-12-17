@@ -8,21 +8,21 @@
         /// <summary>
         /// Represents an admin user.
         /// </summary>
-        Admin,
+        admin,
 
         /// <summary>
         /// Represents a super admin user.
         /// </summary>
-        SuperAdmin,
+        superadmin,
 
         /// <summary>
         /// Represents a mid admin user.
         /// </summary>
-        MidAdmin,
+        midadmin,
 
         /// <summary>
         /// Represents a regular user.
         /// </summary>
-        User
+        user
     }
 }

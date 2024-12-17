@@ -58,6 +58,14 @@ namespace MatrimonialApi.Models
         public string EmailId { get; set; }
 
         /// <summary>
+        /// Gets or Sets Role
+        /// </summary>
+        [Required]
+
+        [DataMember(Name = "role")]
+        public string Role { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -69,6 +77,7 @@ namespace MatrimonialApi.Models
             sb.Append("  MiddleName: ").Append(MiddleName).Append("\n");
             sb.Append("  LastName: ").Append(LastName).Append("\n");
             sb.Append("  EmailId: ").Append(EmailId).Append("\n");
+            sb.Append("  Role: ").Append(Role).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

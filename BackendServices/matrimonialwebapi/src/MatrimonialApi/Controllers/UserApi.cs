@@ -20,6 +20,9 @@ using Microsoft.AspNetCore.Authorization;
 using MatrimonialApi.Models;
 using MatrimonialApi.Interface;
 using System.Threading.Tasks;
+using System.Net.Http;
+using MatrimonialApi.Utilities;
+using System.Net;
 
 namespace MatrimonialApi.Controllers
 { 
@@ -29,15 +32,15 @@ namespace MatrimonialApi.Controllers
     [ApiController]
     public class AdminApiController : ControllerBase
     {
-        private readonly IAdminService _adminService;
+        private readonly IUserService _userService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminApiController"/> class.
         /// </summary>
-        /// <param name="adminService">The admin service.</param>
-        public AdminApiController(IAdminService adminService)
+        /// <param name="userService">The admin service.</param>
+        public AdminApiController(IUserService userService)
         {
-            _adminService = adminService;
+            _userService = userService;
         }
 
         /// <summary>
@@ -74,13 +77,31 @@ namespace MatrimonialApi.Controllers
 
                 //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
                 // return StatusCode(0);
-                var result = await _adminService.AddAdminAsync(body);
+                var result = await _userService.AddUserAsync(body);
                 return Ok(result);
             }
             catch (Exception ex)
             {
+                //HttpResponseMessage response = new HttpResponseMessage();
+                //response.StatusCode = System.Net.HttpStatusCode.BadRequest;
+                ////response.ReasonPhrase = ex.Message;
+                //response.ReasonPhrase = "kuch bhi";
+                //response.Content = new StringContent(JsonConvert.SerializeObject(new { Message = ex.Message }));
+                //return BadRequest(new { Message = ex.Message });
 
-                throw ex;
+
+                //// Log the exception for debugging purposes
+                //Console.WriteLine(ex.Message);
+
+                // Create a custom error response
+                var errorResponse = new ErrorResponse
+                {
+                    Message = ex.Message,
+                    StatusCode = (int)HttpStatusCode.BadRequest
+                };
+
+                // Return the custom error response to the client
+                return StatusCode(errorResponse.StatusCode, errorResponse);
             }
            
         }
@@ -89,7 +110,6 @@ namespace MatrimonialApi.Controllers
         /// Get Admin Users
         /// </summary>
         /// <remarks> Get Admin Users</remarks>
-        /// <param name="xRequestAuth"></param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
@@ -117,7 +137,7 @@ namespace MatrimonialApi.Controllers
 
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
-            var admins = await _adminService.GetAllAdminsAsync();
+            var admins = await _userService.GetAllUsersAsync();
             return Ok(admins);
         }
 
@@ -125,7 +145,7 @@ namespace MatrimonialApi.Controllers
         /// Delete a admin user
         /// </summary>
         /// <remarks>Delete a admin user</remarks>
-        /// <param name="xRequestAuth"></param>
+        /// 
         /// <param name="adminId"></param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
@@ -154,7 +174,7 @@ namespace MatrimonialApi.Controllers
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
 
-            await _adminService.DeleteAdminAsync(adminId);
+            await _userService.DeleteUserAsync(adminId);
             return NoContent(); // Assuming deletion does not return a resource
 
         }
@@ -163,7 +183,6 @@ namespace MatrimonialApi.Controllers
         /// Get a admin user
         /// </summary>
         /// <remarks>get a admin user</remarks>
-        /// <param name="xRequestAuth"></param>
         /// <param name="adminId"></param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
@@ -192,7 +211,7 @@ namespace MatrimonialApi.Controllers
 
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
-            var admin = await _adminService.GetAdminByIdAsync(adminId);
+            var admin = await _userService.GetUserByIdAsync(adminId);
             return Ok(admin);
         }
 
@@ -229,8 +248,8 @@ namespace MatrimonialApi.Controllers
 
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
-
-            var result = await _adminService.UpdateAdminAsync(adminId, body);
+            var result= await _userService.UpdateUserAsync(adminId, body);
+            //var result = await _userService.UpdateUserAsync(adminId, body);
             return Ok(result);
         }
     }
