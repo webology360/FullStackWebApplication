@@ -2,7 +2,9 @@ using MatrimonialApi.DBEntity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 /// <summary>
@@ -52,6 +54,11 @@ public class DbInitializer
             if (createAdminUser.Succeeded)
             {
                 await userManager.AddToRoleAsync(adminUser, "superadmin");
+                var claims = new[]
+                {
+                        new Claim("role", "superadmin"), // Add a new claim for user role
+                    };
+                await userManager.AddClaimsAsync(adminUser,claims);
             }
         }
     }

@@ -32,23 +32,23 @@ namespace MatrimonialApi.Utilities
         /// <summary>
         /// Generates a JWT token for the specified user.
         /// </summary>
-        /// <param name="userName">The user ID.</param>
+        /// <param name="user">User Instance</param>
         /// <param name="userRole">The user role.</param>
         /// <returns>The generated JWT token.</returns>
-        public string GenerateToken(string userName, string userRole)
+        public string GenerateToken(User user, string userRole)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-                    new Claim(JwtRegisteredClaimNames.Sub, userName),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim("role", userRole), // Add a new claim for user role
-                    new Claim("email", "NeedToBeAdded"),
-                    new Claim("department", "NeedToBeAdded")
+                    new Claim("email", user.Email)
+                    //new Claim("department", "NeedToBeAdded")
                 };
-            
+
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],

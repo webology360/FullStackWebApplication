@@ -58,11 +58,16 @@ public class UserService : IUserService
             userEntity.UserName= user.EmailId;
             userEntity.Email = user.EmailId;
             //userEntity.Role = user.Role;
-            var password =_passwordHasher.HashPassword(userEntity,_configuration["DefaultUserPassword"]);
+            //var password =_passwordHasher.HashPassword(userEntity,_configuration["DefaultUserPassword"]);
+            var password=_configuration["DefaultUserPassword"];
             var addedUser = await _userManager.CreateAsync(userEntity, password);
             if(addedUser.Succeeded)
             {
+                //For storing role it can be stored in in seperate role value or with claims, both serve different purposes
+                // For role based authorization use role value, for role based access control use claims (there could be multiple claims for a user)
+                // There can me multiple use cases where we can use role value or claims
                 await _userManager.AddToRoleAsync(userEntity, user.Role);
+                await _userManager.AddClaimAsync(userEntity, new System.Security.Claims.Claim("role", user.Role));
             }
             
             //var UserDto = _mapper.Map<UserDTO>(addedUser);
