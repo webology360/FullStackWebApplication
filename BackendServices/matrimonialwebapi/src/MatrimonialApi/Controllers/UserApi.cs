@@ -30,36 +30,36 @@ namespace MatrimonialApi.Controllers
     /// 
     /// </summary>
     [ApiController]
-    public class AdminApiController : ControllerBase
+    public class UserApiController : ControllerBase
     {
         private readonly IUserService _userService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AdminApiController"/> class.
+        /// Initializes a new instance of the <see cref="UserApiController"/> class.
         /// </summary>
         /// <param name="userService">The admin service.</param>
-        public AdminApiController(IUserService userService)
+        public UserApiController(IUserService userService)
         {
             _userService = userService;
         }
 
         /// <summary>
-        /// Add a Admin User
+        /// Add a User
         /// </summary>
-        /// <remarks> Add a Admin User</remarks>
-        /// <param name="body"> Add a Admin User</param>
+        /// <remarks> Add a User</remarks>
+        /// <param name="body"> Add a User</param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
         /// <response code="500">An error occured while processing the request.</response>
         /// <response code="0">Default error</response>
         [HttpPost]
-        [Route("/api/admin")]
+        [Route("/api/user")]
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName,Roles = "superadmin")]
         [ValidateModelState]
-        [SwaggerOperation("AddAdmin")]
+        [SwaggerOperation("AddUser")]
         [SwaggerResponse(statusCode: 200, type: typeof(UserDTO), description: "Successful operation")]
-        public virtual async Task<IActionResult> AddAdmin([FromBody] UserDTO body)
+        public virtual async Task<IActionResult> AddUser([FromBody] UserDTO body)
         {
             try
             {
@@ -107,21 +107,21 @@ namespace MatrimonialApi.Controllers
         }
 
         /// <summary>
-        /// Get Admin Users
+        /// Get Users
         /// </summary>
-        /// <remarks> Get Admin Users</remarks>
+        /// <remarks> Get Users</remarks>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
         /// <response code="500">An error occured while processing the request.</response>
         /// <response code="0">Default error</response>
         [HttpGet]
-        [Route("/api/admin")]
+        [Route("/api/user")]
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
-        [SwaggerOperation("AdminGet")]
-        [SwaggerResponse(statusCode: 200, type: typeof(List<AdminDTO>), description: "Successful operation")]
-        public virtual async Task<IActionResult> AdminGet()
+        [SwaggerOperation("UserGet")]
+        [SwaggerResponse(statusCode: 200, type: typeof(List<UserDTO>), description: "Successful operation")]
+        public virtual async Task<IActionResult> UserGet()
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(List<CreateAdmin>));
@@ -142,22 +142,22 @@ namespace MatrimonialApi.Controllers
         }
 
         /// <summary>
-        /// Delete a admin user
+        /// Delete a user
         /// </summary>
-        /// <remarks>Delete a admin user</remarks>
+        /// <remarks>Delete a user</remarks>
         /// 
-        /// <param name="adminId"></param>
+        /// <param name="userId"></param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
         /// <response code="500">An error occured while processing the request.</response>
         /// <response code="0">Default error</response>
         [HttpDelete]
-        [Route("/api/admin/{adminId}")]
+        [Route("/api/admin/{userId}")]
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
-        [SwaggerOperation("DeleteAdmin")]
-        public virtual async Task<IActionResult> DeleteAdmin([FromRoute][Required] string adminId)
+        [SwaggerOperation("DeleteUser")]
+        public virtual async Task<IActionResult> DeleteAdmin([FromRoute][Required] string userId)
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200);
@@ -174,28 +174,28 @@ namespace MatrimonialApi.Controllers
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
 
-            await _userService.DeleteUserAsync(adminId);
+            await _userService.DeleteUserAsync(userId);
             return NoContent(); // Assuming deletion does not return a resource
 
         }
 
         /// <summary>
-        /// Get a admin user
+        /// Get a user
         /// </summary>
-        /// <remarks>get a admin user</remarks>
-        /// <param name="adminId"></param>
+        /// <remarks>get a user</remarks>
+        /// <param name="userId"></param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
         /// <response code="500">An error occured while processing the request.</response>
         /// <response code="0">Default error</response>
         [HttpGet]
-        [Route("/api/admin/{adminId}")]
+        [Route("/api/admin/{userId}")]
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
-        [SwaggerOperation("GetAdmin")]
-        [SwaggerResponse(statusCode: 200, type: typeof(AdminDTO), description: "Successful operation")]
-        public virtual async Task<IActionResult> GetAdmin([FromRoute][Required] string adminId)
+        [SwaggerOperation("GetUser")]
+        [SwaggerResponse(statusCode: 200, type: typeof(UserDTO), description: "Successful operation")]
+        public virtual async Task<IActionResult> GetUser([FromRoute][Required] string userId)
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(CreateAdmin));
@@ -211,28 +211,28 @@ namespace MatrimonialApi.Controllers
 
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
-            var admin = await _userService.GetUserByIdAsync(adminId);
+            var admin = await _userService.GetUserByIdAsync(userId);
             return Ok(admin);
         }
 
         /// <summary>
-        /// Update a admin user
+        /// Update a user
         /// </summary>
-        /// <remarks>Update a admin user</remarks>
-        /// <param name="body">Update a admin</param>
-        /// <param name="adminId">The ID of the admin user</param>
+        /// <remarks>Update a user</remarks>
+        /// <param name="body">Update a user</param>
+        /// <param name="userId">The ID of the user</param>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
         /// <response code="500">An error occured while processing the request.</response>
         /// <response code="0">Default error</response>
         [HttpPut]
-        [Route("/api/admin/{adminId}")]
+        [Route("/api/admin/{userId}")]
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
-        [SwaggerOperation("UpdateAdmin")]
+        [SwaggerOperation("UpdateUser")]
         [SwaggerResponse(statusCode: 200, type: typeof(UserDTO), description: "Successful operation")]
-        public virtual async Task<IActionResult> UpdateAdmin([FromBody] UserDTO body, [FromRoute][Required] string adminId)
+        public virtual async Task<IActionResult> UpdateUser([FromBody] UserDTO body, [FromRoute][Required] string userId)
         {
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200);
@@ -248,7 +248,7 @@ namespace MatrimonialApi.Controllers
 
             //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(0);
-            var result= await _userService.UpdateUserAsync(adminId, body);
+            var result= await _userService.UpdateUserAsync(userId, body);
             //var result = await _userService.UpdateUserAsync(adminId, body);
             return Ok(result);
         }
