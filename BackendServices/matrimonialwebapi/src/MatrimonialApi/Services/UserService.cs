@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using MatrimonialApi.Enum;
 using System.Net.Http;
 using System.Net;
+using System.Security.Claims;
+using System.Linq;
 
 /// <summary>
 /// Service for managing Users.
@@ -55,8 +57,8 @@ public class UserService : IUserService
             }
             //user.Role.ToLower()==
             var userEntity = _mapper.Map<User>(user);
-            userEntity.UserName= user.EmailId;
-            userEntity.Email = user.EmailId;
+            userEntity.UserName= user.Email;
+            userEntity.Email = user.Email;
             //userEntity.Role = user.Role;
             //var password =_passwordHasher.HashPassword(userEntity,_configuration["DefaultUserPassword"]);
             var password=_configuration["DefaultUserPassword"];
@@ -66,7 +68,7 @@ public class UserService : IUserService
                 //For storing role it can be stored in in seperate role value or with claims, both serve different purposes
                 // For role based authorization use role value, for role based access control use claims (there could be multiple claims for a user)
                 // There can me multiple use cases where we can use role value or claims
-                await _userManager.AddToRoleAsync(userEntity, user.Role);
+                    await _userManager.AddToRoleAsync(userEntity, user.Role);
                 await _userManager.AddClaimAsync(userEntity, new System.Security.Claims.Claim("role", user.Role));
             }
             
@@ -84,13 +86,27 @@ public class UserService : IUserService
     /// Retrieves all Users asynchronously.
     /// </summary>
     /// <returns>A collection of all Users.</returns>
-    public async Task<IEnumerable<UserDTO>> GetAllUsersAsync()
+    public async Task<IList<UserDTO>> GetAllUsersAsync(string role)
     {
-        // Implement the logic to retrieve all Users
-        //var users = await _userManager.get;
-        //var userDTOs = _mapper.Map<IEnumerable<UserDTO>>(users);
-        //return userDTOs;
-        throw new NotImplementedException();
+            Claim claim = new Claim("role", role.ToLower());
+            var users = await _userManager.GetUsersForClaimAsync(claim);
+
+            var UserDTOs = _mapper.Map<IList<UserDTO>>(users);
+            foreach (var user in users)
+            {
+                var userDTO = UserDTOs.FirstOrDefault(u => u.Id == user.Id.ToString());
+                if (userDTO != null)
+                {
+                    var claims = await _userManager.GetClaimsAsync(user);
+                    var roleClaim = claims.FirstOrDefault(c => c.Type == "role");
+                    if (roleClaim != null)
+                    {
+                        userDTO.Role = roleClaim.Value;
+                    }
+                }
+            }
+        return UserDTOs;
+        
     }
 
     /// <summary>
@@ -101,27 +117,52 @@ public class UserService : IUserService
     public async Task<UserDTO> GetUserByIdAsync(string UserId)
     {
         // Implement the logic to retrieve a specific User by ID
-        throw new NotImplementedException();
+       var user=await _userManager.FindByIdAsync(UserId);
+       var userDTO = _mapper.Map<UserDTO>(user);
+       userDTO.Role = user.Claims.Find(x => x.ClaimType == "role").ClaimValue;
+       return userDTO;
     }
 
+
     /// <summary>
-    /// Updates an User asynchronously.
+    /// Updates a specific User asynchronously.
     /// </summary>
     /// <param name="UserId">The ID of the User to update.</param>
-    /// <param name="User">The updated User.</param>
+    /// <param name="User">The updated User information.</param>
+    /// <returns>The updated User.</returns>
+
     public async Task<UserDTO> UpdateUserAsync(string UserId, UserDTO User)
     {
-        // Implement the logic to update an User
-        throw new NotImplementedException();
+        var userEntity = await _userManager.FindByIdAsync(UserId);
+        if (userEntity == null)
+        {
+            // User not found, handle the error
+            throw new Exception("User not found");
+        }
+
+        // Update the user entity with the values from UserDTO
+       var updatedUser=_mapper.Map(User, userEntity);
+
+        // Save the changes to the database
+        var result = await _userManager.UpdateAsync(updatedUser);
+        if (!result.Succeeded)
+        {
+            // Failed to update the user, handle the error
+            throw new Exception("Failed to update user");
+        }
+
+        // Map the updated user entity back to UserDTO
+        var updatedUserDTO = _mapper.Map<UserDTO>(userEntity);
+
+        return updatedUserDTO;
     }
 
     /// <summary>
     /// Deletes an User asynchronously.
     /// </summary>
     /// <param name="UserId">The ID of the User to delete.</param>
-    public async Task DeleteUserAsync(string UserId)
+    public async Task<IdentityResult> DeleteUserAsync(string UserId)
     {
-        // Implement the logic to delete an User
-        throw new NotImplementedException();
+       return await _userManager.DeleteAsync(await _userManager.FindByIdAsync(UserId));
     }
 }

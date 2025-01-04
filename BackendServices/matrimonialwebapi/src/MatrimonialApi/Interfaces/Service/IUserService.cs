@@ -19,10 +19,10 @@ namespace MatrimonialApi.Interface
         Task<IdentityResult> AddUserAsync(UserDTO User);
 
         /// <summary>
-        /// Gets all Users asynchronously.
+        /// Gets all Users asynchronously based on role.
         /// </summary>
-        /// <returns>A collection of all Users.</returns>
-        Task<IEnumerable<UserDTO>> GetAllUsersAsync();
+        /// <returns>A collection of all Users having same role.</returns>
+        Task<IList<UserDTO>> GetAllUsersAsync(string role);
 
         /// <summary>
         /// Gets an User by ID asynchronously.
@@ -42,6 +42,6 @@ namespace MatrimonialApi.Interface
         /// Deletes an User asynchronously.
         /// </summary>
         /// <param name="UserId">The ID of the User to delete.</param>
-        Task DeleteUserAsync(string UserId);
+        Task<IdentityResult> DeleteUserAsync(string UserId);       
     }
 }

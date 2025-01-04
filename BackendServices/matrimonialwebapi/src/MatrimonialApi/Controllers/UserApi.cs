@@ -82,18 +82,6 @@ namespace MatrimonialApi.Controllers
             }
             catch (Exception ex)
             {
-                //HttpResponseMessage response = new HttpResponseMessage();
-                //response.StatusCode = System.Net.HttpStatusCode.BadRequest;
-                ////response.ReasonPhrase = ex.Message;
-                //response.ReasonPhrase = "kuch bhi";
-                //response.Content = new StringContent(JsonConvert.SerializeObject(new { Message = ex.Message }));
-                //return BadRequest(new { Message = ex.Message });
-
-
-                //// Log the exception for debugging purposes
-                //Console.WriteLine(ex.Message);
-
-                // Create a custom error response
                 var errorResponse = new ErrorResponse
                 {
                     Message = ex.Message,
@@ -107,38 +95,27 @@ namespace MatrimonialApi.Controllers
         }
 
         /// <summary>
-        /// Get Users
+        /// Get Users based in role
         /// </summary>
-        /// <remarks> Get Users</remarks>
+        /// <remarks> Get Users based in role</remarks>
+        /// 
+        /// <param name="roleName"></param>
+        /// <remarks> Get Users based in role</remarks>
         /// <response code="200">Successful operation</response>
         /// <response code="400">Invalid input</response>
         /// <response code="422">Validation exception</response>
         /// <response code="500">An error occured while processing the request.</response>
         /// <response code="0">Default error</response>
         [HttpGet]
-        [Route("/api/user")]
+        [Route("/api/user/{roleName}")]
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
         [SwaggerOperation("UserGet")]
         [SwaggerResponse(statusCode: 200, type: typeof(List<UserDTO>), description: "Successful operation")]
-        public virtual async Task<IActionResult> UserGet()
+        public virtual async Task<IActionResult> UserGet([FromRoute][Required] string roleName)
         {
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(List<CreateAdmin>));
-
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
-
-            //TODO: Uncomment the next line to return response 422 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(422);
-
-            //TODO: Uncomment the next line to return response 500 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(500);
-
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
-            var admins = await _userService.GetAllUsersAsync();
-            return Ok(admins);
+            var users = await _userService.GetAllUsersAsync(roleName);
+            return Ok(users);
         }
 
         /// <summary>
@@ -153,30 +130,16 @@ namespace MatrimonialApi.Controllers
         /// <response code="500">An error occured while processing the request.</response>
         /// <response code="0">Default error</response>
         [HttpDelete]
-        [Route("/api/admin/{userId}")]
+        [Route("/api/user/{userId}")]
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
         [SwaggerOperation("DeleteUser")]
         public virtual async Task<IActionResult> DeleteAdmin([FromRoute][Required] string userId)
         {
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200);
-
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
-
-            //TODO: Uncomment the next line to return response 422 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(422);
-
-            //TODO: Uncomment the next line to return response 500 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(500);
-
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
-
-            await _userService.DeleteUserAsync(userId);
-            return NoContent(); // Assuming deletion does not return a resource
-
+            
+            var result= await _userService.DeleteUserAsync(userId);
+            return Ok(result);
+           
         }
 
         /// <summary>
@@ -197,20 +160,6 @@ namespace MatrimonialApi.Controllers
         [SwaggerResponse(statusCode: 200, type: typeof(UserDTO), description: "Successful operation")]
         public virtual async Task<IActionResult> GetUser([FromRoute][Required] string userId)
         {
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(CreateAdmin));
-
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
-
-            //TODO: Uncomment the next line to return response 422 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(422);
-
-            //TODO: Uncomment the next line to return response 500 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(500);
-
-            //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(0);
             var admin = await _userService.GetUserByIdAsync(userId);
             return Ok(admin);
         }
@@ -227,7 +176,7 @@ namespace MatrimonialApi.Controllers
         /// <response code="500">An error occured while processing the request.</response>
         /// <response code="0">Default error</response>
         [HttpPut]
-        [Route("/api/admin/{userId}")]
+        [Route("/api/user/{userId}")]
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
         [SwaggerOperation("UpdateUser")]

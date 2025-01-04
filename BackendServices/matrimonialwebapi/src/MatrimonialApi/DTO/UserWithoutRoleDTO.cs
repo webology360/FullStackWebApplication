@@ -24,14 +24,16 @@ namespace MatrimonialApi.Models
     /// 
     /// </summary>
     [DataContract]
-    public partial class UserDTO : IEquatable<UserDTO>
+    public partial class UserWithoutRoleDTO : IEquatable<UserWithoutRoleDTO>
     {
         /// <summary>
         /// Gets or Sets Id
         /// </summary>
-        //[Required]
+        [Required]
+
         [DataMember(Name = "id")]
         public string Id { get; set; }
+
 
         /// <summary>
         /// Gets or Sets EmailId
@@ -72,14 +74,7 @@ namespace MatrimonialApi.Models
         [DataMember(Name = "email")]
         public string Email { get; set; }
 
-        /// <summary>
-        /// Gets or Sets Role
-        /// </summary>
-        [Required]
-
-        [DataMember(Name = "role")]
-        public string Role { get; set; }
-
+        
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -88,12 +83,10 @@ namespace MatrimonialApi.Models
         {
             var sb = new StringBuilder();
             sb.Append("class User {\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  FirstName: ").Append(FirstName).Append("\n");
             sb.Append("  MiddleName: ").Append(MiddleName).Append("\n");
             sb.Append("  LastName: ").Append(LastName).Append("\n");
             sb.Append("  EmailId: ").Append(Email).Append("\n");
-            sb.Append("  Role: ").Append(Role).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -116,7 +109,7 @@ namespace MatrimonialApi.Models
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((UserDTO)obj);
+            return obj.GetType() == GetType() && Equals((UserWithoutRoleDTO)obj);
         }
 
         /// <summary>
@@ -124,17 +117,12 @@ namespace MatrimonialApi.Models
         /// </summary>
         /// <param name="other">Instance of User to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(UserDTO other)
+        public bool Equals(UserWithoutRoleDTO other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
             return
-                 (
-                    Id == other.Id ||
-                    Id != null &&
-                    Id.Equals(other.Id)
-                ) &&
                 (
                     FirstName == other.FirstName ||
                     FirstName != null &&
@@ -182,12 +170,12 @@ namespace MatrimonialApi.Models
         #region Operators
 #pragma warning disable 1591
 
-        public static bool operator ==(UserDTO left, UserDTO right)
+        public static bool operator ==(UserWithoutRoleDTO left, UserWithoutRoleDTO right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(UserDTO left, UserDTO right)
+        public static bool operator !=(UserWithoutRoleDTO left, UserWithoutRoleDTO right)
         {
             return !Equals(left, right);
         }

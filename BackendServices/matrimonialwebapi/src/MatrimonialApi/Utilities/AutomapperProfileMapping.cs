@@ -18,6 +18,7 @@ namespace MatrimonialApi.Utilities
             CreateMap<AdminDTO, CreateAdmin>();
             CreateMap<UserDTO, User>();
             CreateMap<User,UserDTO>();
+            CreateMap<User,UserWithoutRoleDTO>();
         }
     }
 }
