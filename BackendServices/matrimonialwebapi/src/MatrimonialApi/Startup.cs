@@ -168,7 +168,17 @@ namespace MatrimonialApi
 
             // Register AutoMapper
             services.AddAutoMapper(typeof(Startup));
-
+            //Add CORS services
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigins",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
            
             services.AddSingleton<IMongoDBSettings>(sp =>
                sp.GetRequiredService<IOptions<MongoDBSettings>>().Value);
@@ -219,6 +229,9 @@ namespace MatrimonialApi
 
             //TODO: Uncomment this if you need wwwroot folder
             // app.UseStaticFiles();
+            
+            // Use the CORS middleware
+            app.UseCors("AllowSpecificOrigins");
 
             app.UseAuthorization();
             app.UseAuthentication();
