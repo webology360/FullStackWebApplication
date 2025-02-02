@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import apiService from '../services/apiService';
 import '../assets/styles/login.css'; // Assuming you will create a CSS file for styling
 import apiConstant from '../utils/apiConstant';
@@ -7,8 +7,12 @@ const LoginPage = () => {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleForgotPasswordClick = () => {
+  const navigate = useNavigate();
+  
+  if ( localStorage.getItem('token') !== null && localStorage.getItem('token') !== undefined) {
+    localStorage.removeItem('token');
+  }
+    const handleForgotPasswordClick = () => {
     setShowForgotPassword(true);
   };
 
@@ -21,10 +25,16 @@ const LoginPage = () => {
     // Instead of writing username: username and password: password, you can simply write { username, password }, and JavaScript will automatically assign the values of the username and password variables to the corresponding properties in the object.
     const inputData = { username, password };
     debugger;
-    const data = await apiService.post(apiConstant.API_URL, inputData);
-    debugger
-    // Handle the response data
-  };
+    const data = await apiService.post(apiConstant.Base_URL+apiConstant.Login_API,false, inputData);
+   if(data!==null && data!==undefined){
+    debugger;
+    // Save the token in local storage
+    localStorage.setItem('token', data.token);
+    // Redirect to the home page
+    navigate('/');
+     }
+   }
+    
 
   const handleForgotPasswordSubmit = (event) => {
     event.preventDefault();

@@ -13,6 +13,7 @@ const SearchForm = () => {
   useEffect(() => {
     // Fetch data from the API and populate the dropdowns
     const fetchData = async () => {
+      debugger
       try {
         const response = await fetch('https://api.example.com/dropdown-data');
         const data = await response.json();
