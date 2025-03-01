@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Net;
 using System.Security.Claims;
 using System.Linq;
+using FluentValidation;
 
 /// <summary>
 /// Service for managing Users.
@@ -24,6 +25,7 @@ public class UserService : IUserService
     private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
     private readonly IConfiguration _configuration;
+    private readonly IValidator<UserDTO> _validator;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserService"/> class.
@@ -32,12 +34,13 @@ public class UserService : IUserService
     /// <param name="mapper">The mapper.</param>
     /// <param name="passwordHasher">The password hasher.</param>
     /// <param name="configuration">The configuration.</param>
-    public UserService(UserManager<User> userManager, IMapper mapper, IPasswordHasher<User> passwordHasher, IConfiguration configuration)
+    public UserService(UserManager<User> userManager, IMapper mapper, IPasswordHasher<User> passwordHasher, IConfiguration configuration, IValidator<UserDTO> validator)
     {
         _mapper = mapper;
         _userManager = userManager;
         _passwordHasher = passwordHasher;
         _configuration = configuration;
+        _validator = validator;
     }
 
     /// <summary>
@@ -49,7 +52,14 @@ public class UserService : IUserService
     {
         try
         {
-            if(!Enum.TryParse(typeof(UserRole), user.Role.ToLower(), out var role))
+            var validationResult = await _validator.ValidateAsync(user);
+            if (!validationResult.IsValid)
+            {
+                var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+                throw new HttpRequestException(errors, null, HttpStatusCode.BadRequest);
+            }
+
+            if (!Enum.TryParse(typeof(UserRole), user.Role.ToLower(), out var role))
             {
                 var errorMessage = "Invalid role";
                 var statusCode = HttpStatusCode.BadRequest;

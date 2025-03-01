@@ -7,23 +7,23 @@ import { useContext } from 'react';
 
 const Navbar = () => {
   debugger;
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { isAuthenticated,user,logout } = useContext(AuthContext);
+  
   return (
     <nav className="navbar">
       <div className="navbar-logo">
         <img src="/path/to/logo.png" alt="Logo" />
       </div>
       <div className="navbar-links">
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/contact">Contact Us</Link>
-        {/* <Link to="/login" className="login-button">Login</Link> */}
         {isAuthenticated ? (
-          // <li><button onClick={logout}>Logout</button></li>
-          <Link to="/login" onClick={logout} className="login-button">Logout</Link>
+          <button  onClick={logout} className="login-button">Logout</button>
         ) : (
           <Link to="/login" className="login-button">Login</Link>
         )}
+        {isAuthenticated&&user&&user.role==='superadmin' ? (
+          <Link to="/admin" className="admin-button">Admin</Link>
+        ) : null}
+
       </div>
     </nav>
   );

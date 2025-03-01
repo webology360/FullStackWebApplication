@@ -10,19 +10,23 @@ import './assets/styles/App.css';
 import LoginPage from './pages/LoginPage';
 import { AuthContext } from './context/AppContext';
 import { useContext } from 'react';
+import AdminPage from './pages/AdminPage';
 
 const App = () => {
   debugger;
-const {isAuthenticated, logout} = useContext(AuthContext);
-
+const {isAuthenticated} = useContext(AuthContext);
+debugger;
+console.log('isAuthenticated in App.js',isAuthenticated);
   return (
    <>
       {/* <Header /> */}
-      <Navbar />
+    
       <Routes>
-          <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} />
+          {/* <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} /> */}
+          <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/login"/>} />
           <Route path="/about" element={isAuthenticated ? <AboutPage /> : <Navigate to="/login" />} />
           <Route path="/contact" element={isAuthenticated ? <ContactPage /> : <Navigate to="/login" />} />
+          <Route path="/admin" element={isAuthenticated ? <AdminPage /> : <Navigate to="/login" />} />
           <Route path="/login" element={<LoginPage />} />
       </Routes>
       <Footer />

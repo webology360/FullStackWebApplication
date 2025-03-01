@@ -36,7 +36,7 @@ namespace MatrimonialApi.Models
         /// <summary>
         /// Gets or Sets EmailId
         /// </summary>
-        [Required]
+        //[Required]- Beacuse we will use fluent validation
 
         [DataMember(Name = "userName")]
         public string UserName { get; set; }
@@ -44,7 +44,7 @@ namespace MatrimonialApi.Models
         /// <summary>
         /// Gets or Sets FirstName
         /// </summary>
-        [Required]
+        //[Required]- Beacuse we will use fluent validation
 
         [DataMember(Name = "firstName")]
         public string FirstName { get; set; }
@@ -59,7 +59,7 @@ namespace MatrimonialApi.Models
         /// <summary>
         /// Gets or Sets LastName
         /// </summary>
-        [Required]
+        //[Required]- Beacuse we will use fluent validation
 
         [DataMember(Name = "lastName")]
         public string LastName { get; set; }
@@ -67,7 +67,7 @@ namespace MatrimonialApi.Models
         /// <summary>
         /// Gets or Sets EmailId
         /// </summary>
-        [Required]
+        //[Required]- Beacuse we will use fluent validation
 
         [DataMember(Name = "email")]
         public string Email { get; set; }
@@ -75,7 +75,7 @@ namespace MatrimonialApi.Models
         /// <summary>
         /// Gets or Sets Role
         /// </summary>
-        [Required]
+        //[Required]- Beacuse we will use fluent validation
 
         [DataMember(Name = "role")]
         public string Role { get; set; }

@@ -45,6 +45,8 @@ using AspNetCore.Identity.Mongo.Model;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace MatrimonialApi
 {
@@ -185,6 +187,12 @@ namespace MatrimonialApi
 
             // Configure MongoDB settings
             services.Configure<MongoDBSettings>(Configuration.GetSection("MongoDbConfig"));
+
+            // Register FluentValidation
+            services.AddValidatorsFromAssemblies(new[] { typeof(Startup).Assembly });
+            services.AddFluentValidationAutoValidation();
+
+
 
 
             // Register MongoDB client and database
