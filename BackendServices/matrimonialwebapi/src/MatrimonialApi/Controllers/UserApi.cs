@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using MatrimonialApi.Utilities;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace MatrimonialApi.Controllers
 { 
@@ -33,14 +34,16 @@ namespace MatrimonialApi.Controllers
     public class UserApiController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ILogger<UserApiController> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserApiController"/> class.
         /// </summary>
         /// <param name="userService">The admin service.</param>
-        public UserApiController(IUserService userService)
+        public UserApiController(IUserService userService, ILogger<UserApiController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -61,8 +64,6 @@ namespace MatrimonialApi.Controllers
         [SwaggerResponse(statusCode: 200, type: typeof(UserDTO), description: "Successful operation")]
         public virtual async Task<IActionResult> AddUser([FromBody] UserDTO body)
         {
-            try
-            {
                 //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
                 // return StatusCode(200, default(CreateAdmin));
 
@@ -77,21 +78,9 @@ namespace MatrimonialApi.Controllers
 
                 //TODO: Uncomment the next line to return response 0 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
                 // return StatusCode(0);
+                _logger.LogInformation("Handling USER Add request");
                 var result = await _userService.AddUserAsync(body);
                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new ErrorResponse
-                {
-                    Message = ex.Message,
-                    StatusCode = (int)HttpStatusCode.BadRequest
-                };
-
-                // Return the custom error response to the client
-                return StatusCode(errorResponse.StatusCode, errorResponse);
-            }
-           
         }
 
         /// <summary>

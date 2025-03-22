@@ -47,6 +47,8 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Serilog;
+using MatrimonialApi.Middleware;
 
 namespace MatrimonialApi
 {
@@ -240,10 +242,10 @@ namespace MatrimonialApi
             
             // Use the CORS middleware
             app.UseCors("AllowSpecificOrigins");
-
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseAuthorization();
             app.UseAuthentication();
-
+            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -275,6 +277,9 @@ namespace MatrimonialApi
 
                 app.UseHsts();
             }
+
+
+            app.UseSerilogRequestLogging();
         }
     }
 }

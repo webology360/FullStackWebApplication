@@ -1,27 +1,32 @@
+ import { toast } from "react-toastify";
+ import 'react-toastify/dist/ReactToastify.css';
+
+ //toast.configure();
 const apiService = {
-  post: async (url, requireSecurityToken,data) => {
+  post: async (url, requireSecurityToken, data) => {
     debugger;
-    if (requireSecurityToken === null || requireSecurityToken === undefined) {
-      requireSecurityToken = true;
-    }
     try {
+      if (requireSecurityToken === null || requireSecurityToken === undefined) {
+        requireSecurityToken = true;
+      }
       const response = await fetch(url, {
         method: 'POST',
-        headers: createHeaders (requireSecurityToken),
+        headers: createHeaders(requireSecurityToken),
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Something went wrong');
+        throw new Error(`Response status: ${response.status}`);
       }
-     
-      return response.json();
-    } catch (error) {
-      console.error('API POST Error:', error);
-      //I am not thorwing the exception here, jsut logging it into console.
-      //throw error;
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      return jsonResponse;
     }
-  },
+    catch (error) {
+      console.error(error.message);
+    }
+
+  }
+  ,
   get: async (url) => {
     try {
       const response = await fetch(url, {
@@ -31,14 +36,15 @@ const apiService = {
         },
       });
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Something went wrong');
+        throw new Error(`Response status: ${response.status}`);
       }
-      return response.json();
+      const jsonResponse = await response.json();
+      
+      console.log(jsonResponse);
+      return jsonResponse;
+
     } catch (error) {
-      console.error('API GET Error:', error);
-      //I am not thorwing the exception here, jsut logging it into console.
-      //throw error;
+      console.error(error.message);
     }
   }
   ,
@@ -49,28 +55,41 @@ const apiService = {
         headers: createHeaders(true)
       });
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Something went wrong');
+        throw new Error(`Response status: ${response.status}`);
       }
-      return response.json();
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      return jsonResponse;
+
     } catch (error) {
-      console.error('API GET Error:', error);
-     }
-  },
-  addUser : async (url,user) => {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: createHeaders(true),
-      body: JSON.stringify(user),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to add user');
+      console.error(error.message);
     }
-    return response.json();
   },
-  updateUser : async (id, user) => {
+  addUser: async (url, user) => {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: createHeaders(true),
+        body: JSON.stringify(user),
+      });
+      toast("User added successfully");
+      if (!response.ok) {
+
+        throw new Error(`Response status: ${response.status}`);
+      }
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      return jsonResponse;
+
+    } catch (error) {
+      toast.error("Error in adding user");
+      console.error(error.message);
+    }
+  },
+  updateUser: async (id, user) => {
     //const response = await fetch(`${url}/${id}`, {
-      const response = await fetch('url', {
+    try{
+    const response = await fetch('url', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -78,19 +97,32 @@ const apiService = {
       body: JSON.stringify(user),
     });
     if (!response.ok) {
-      throw new Error('Failed to update user');
+      throw new Error(`Response status: ${response.status}`);
     }
-    return response.json();
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
+    return jsonResponse;
+
+  } catch (error) {
+    console.error(error.message);
+  }
   },
-  deleteUser : async (id) => {
+  deleteUser: async (id) => {
     // const response = await fetch(`${url}/${id}`, {
-      const response = await fetch('url', {
+    try{
+    const response = await fetch('url', {
       method: 'DELETE',
     });
     if (!response.ok) {
-      throw new Error('Failed to delete user');
+      throw new Error(`Response status: ${response.status}`);
     }
-    return response.json();
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
+    return jsonResponse;
+
+  } catch (error) {
+    console.error(error.message);
+  }
   }
 }
 const createHeaders = (requireSecurityToken) => {
@@ -98,9 +130,9 @@ const createHeaders = (requireSecurityToken) => {
   const headers = {
     'Content-Type': 'application/json',
   };
-  if(requireSecurityToken !== null && requireSecurityToken !== undefined && requireSecurityToken===true){
-     // Add security token to headers if required
-     headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+  if (requireSecurityToken !== null && requireSecurityToken !== undefined && requireSecurityToken === true) {
+    // Add security token to headers if required
+    headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
   }
   return headers;
 };
