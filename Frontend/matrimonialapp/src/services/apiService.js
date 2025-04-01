@@ -1,7 +1,6 @@
- import { toast } from "react-toastify";
- import 'react-toastify/dist/ReactToastify.css';
+import { toast } from '../Provider/ToastProvider';
+import apiConstant from '../utils/apiConstant';
 
- //toast.configure();
 const apiService = {
   post: async (url, requireSecurityToken, data) => {
     debugger;
@@ -19,10 +18,14 @@ const apiService = {
       }
       const jsonResponse = await response.json();
       console.log(jsonResponse);
+      debugger
+      toast.success("Login successful");
       return jsonResponse;
     }
     catch (error) {
+
       console.error(error.message);
+      toast.error("Login failed");
     }
 
   }
@@ -72,7 +75,7 @@ const apiService = {
         headers: createHeaders(true),
         body: JSON.stringify(user),
       });
-      toast("User added successfully");
+     // toast("User added successfully");
       if (!response.ok) {
 
         throw new Error(`Response status: ${response.status}`);
@@ -82,18 +85,18 @@ const apiService = {
       return jsonResponse;
 
     } catch (error) {
-      toast.error("Error in adding user");
+      //toast.error("Error in adding user");
       console.error(error.message);
     }
   },
   updateUser: async (id, user) => {
-    //const response = await fetch(`${url}/${id}`, {
-    try{
-    const response = await fetch('url', {
+    const url = (apiConstant.Base_URL + apiConstant.Update_User_API).replace('{id}', id); 
+
+    try
+    {
+    const response = await fetch(url, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: createHeaders(true),
       body: JSON.stringify(user),
     });
     if (!response.ok) {
@@ -101,17 +104,22 @@ const apiService = {
     }
     const jsonResponse = await response.json();
     console.log(jsonResponse);
+    toast.success("User updated successfully");
     return jsonResponse;
 
   } catch (error) {
     console.error(error.message);
+    toast.error("Error in updating user");
   }
   },
   deleteUser: async (id) => {
-    // const response = await fetch(`${url}/${id}`, {
+    debugger;
+    const url = (apiConstant.Base_URL + apiConstant.Delete_User_API).replace('{id}', id);
+
     try{
-    const response = await fetch('url', {
+    const response = await fetch(url, {
       method: 'DELETE',
+      headers: createHeaders(true)
     });
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);

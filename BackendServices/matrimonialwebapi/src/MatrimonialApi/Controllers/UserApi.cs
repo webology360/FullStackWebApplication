@@ -123,7 +123,7 @@ namespace MatrimonialApi.Controllers
         [Authorize(AuthenticationSchemes = BearerAuthenticationHandler.SchemeName, Roles = "superadmin")]
         [ValidateModelState]
         [SwaggerOperation("DeleteUser")]
-        public virtual async Task<IActionResult> DeleteAdmin([FromRoute][Required] string userId)
+        public virtual async Task<IActionResult> Delete([FromRoute][Required] string userId)
         {
             
             var result= await _userService.DeleteUserAsync(userId);
