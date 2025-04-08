@@ -47,7 +47,6 @@ const AdminPage = () => {
             setUser(users.map(user => (user.id === editingUser.id ? editingUser : user)));
             debugger;
             setEditingUser(null);
-            toast.success("Edit section hidden successfully");
             toast.success("User updated successfully");
           }
         } catch (error) {

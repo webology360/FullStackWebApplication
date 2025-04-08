@@ -85,7 +85,7 @@ const apiService = {
       return jsonResponse;
 
     } catch (error) {
-      //toast.error("Error in adding user");
+      toast.error("Error in adding user"+ error.message);
       console.error(error.message);
     }
   },
@@ -103,8 +103,7 @@ const apiService = {
       throw new Error(`Response status: ${response.status}`);
     }
     const jsonResponse = await response.json();
-    console.log(jsonResponse);
-    toast.success("User updated successfully");
+
     return jsonResponse;
 
   } catch (error) {

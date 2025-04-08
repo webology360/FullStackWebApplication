@@ -4,6 +4,7 @@ import '../../assets/styles/App.css'; // Assuming you will create a CSS file for
 import './Navbar.css'; 
 import { AuthContext } from '../../context/AppContext';
 import { useContext } from 'react';
+import logo from '../../assets/images/Logo.png';
 
 const Navbar = () => {
   debugger;
@@ -12,7 +13,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <img src="/path/to/logo.png" alt="Logo" />
+        <img src={logo} alt="Logo" />
       </div>
       <div className="navbar-links">
         {isAuthenticated ? (
@@ -21,10 +22,14 @@ const Navbar = () => {
           <Link to="/login" className="login-button">Login</Link>
         )}
         {isAuthenticated&&user&&user.role==='superadmin' ? (
-          <Link to="/admin" className="admin-button">Admin</Link>
+          <div>
+            <Link to="/admin">Admin</Link>
+            <Link to="/profileManagement">Profile Management</Link>
+          </div>
         ) : null}
 
       </div>
+
     </nav>
   );
 };

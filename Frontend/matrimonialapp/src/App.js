@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage';
 import { AuthContext } from './context/AppContext';
 import { useContext } from 'react';
 import AdminPage from './pages/AdminPage';
+import ProfileManagement from './pages/ProfileManagement';
 
 const App = () => {
   debugger;
@@ -28,6 +29,7 @@ console.log('isAuthenticated in App.js',isAuthenticated);
           <Route path="/contact" element={isAuthenticated ? <ContactPage /> : <Navigate to="/login" />} />
           <Route path="/admin" element={isAuthenticated ? <AdminPage /> : <Navigate to="/login" />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/profileManagement" element={isAuthenticated ? <ProfileManagement /> : <Navigate to="/login" />} />
       </Routes>
       <Footer />
    </>
